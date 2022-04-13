@@ -17,7 +17,6 @@ public:
 private:
 	void handleEvents();
 	void mouseEventReleased(const sf::Event&);
-	void keyboardEvent(const sf::Event&);
 	void mouseEventMoved(const sf::Event&);
 	void exitGame(const sf::Event& event);
 	

@@ -22,9 +22,6 @@ void Controller::handleEvents()
 		case sf::Event::MouseButtonReleased:
 			mouseEventReleased(event);
 			break;
-		case sf::Event::KeyPressed:
-			keyboardEvent(event);
-			break;
 		case sf::Event::MouseMoved:
 			mouseEventMoved(event);
 			break;
@@ -49,9 +46,5 @@ void Controller::mouseEventReleased(const sf::Event& event)
 }
 //______________________________________________________
 void Controller::mouseEventMoved(const sf::Event& event)
-{
-}
-//____________________________________________________
-void Controller::keyboardEvent(const sf::Event& event)
 {
 }

@@ -14,4 +14,7 @@ Resources& Resources::instance()
 //_____________________________
 void Resources::loadResources()
 {
+	if (!m_texture.loadFromFile("board.png"))
+		std::cout << "fail to load board\n";
+	m_sprite.setTexture(m_texture);
 }
