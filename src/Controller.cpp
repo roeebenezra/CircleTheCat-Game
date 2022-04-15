@@ -2,13 +2,18 @@
 
 //______________________
 Controller::Controller()
-{}
+{
+	runGame();
+}
 //________________________
 void Controller::runGame()
 {
 	while (m_gameWindow.isOpen())
 	{
+		m_gameWindow.clear(sf::Color::White);
+		drawBoard(m_gameWindow);
 		handleEvents();
+		m_gameWindow.display();
 	}
 }
 //_____________________________
@@ -47,4 +52,10 @@ void Controller::mouseEventReleased(const sf::Event& event)
 //______________________________________________________
 void Controller::mouseEventMoved(const sf::Event& event)
 {
+}
+
+//__________________________
+void Controller::drawBoard(sf::RenderWindow& window)
+{
+	m_board.drawBoard(window);
 }
