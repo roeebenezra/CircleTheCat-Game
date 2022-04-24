@@ -5,7 +5,7 @@ Board::Board()
 	setBoard();
 }
 
-//____________________
+//___________________
 void Board::setBoard()
 {
 	setFonts();
@@ -25,7 +25,7 @@ void Board::setBoard()
 	}
 }
 
-//____________________________________________
+//___________________________________________
 CircleShape Board::createCircle(Vector2f& pos)
 {
 	CircleShape circle(CircleSize);
@@ -63,7 +63,7 @@ Text Board::createText(Vector2f& pos)
 	return text;
 }
 
-//______________________________________________
+//_____________________________________________
 void Board::drawBoard(RenderWindow &window)const 
 {
 	for (auto i : m_boardTexts)
@@ -73,5 +73,38 @@ void Board::drawBoard(RenderWindow &window)const
 	{
 		for (auto j : i)
 			window.draw(j);
+	}
+}
+
+//____________________________________
+void Board::findMovement(Vector2f& loc)
+{
+	for (auto &row : m_board) {
+		for (auto& circle : row)
+			if (circle.getGlobalBounds().contains(loc))
+			{
+				circle.setOutlineColor(Color::Blue);
+				circle.setOutlineThickness(5);
+				break;
+			}
+			else
+			{
+				circle.setOutlineColor(Color::Black);
+				circle.setOutlineThickness(3);
+			}
+	}
+}
+//_________________________________
+void Board::findClick(Vector2f& loc)
+{
+	for (auto& row : m_board) {
+		for (auto& circle : row) 
+		{
+			if (circle.getGlobalBounds().contains(loc))
+			{
+				circle.setFillColor(Color::Black);
+				break;
+			}
+		}
 	}
 }

@@ -1,22 +1,24 @@
 #include "Controller.hpp"
 
-//______________________
+//_____________________
 Controller::Controller()
 {
 	runGame();
 }
-//________________________
+
+//_______________________
 void Controller::runGame()
 {
 	while (m_gameWindow.isOpen())
 	{
+		handleEvents();
 		m_gameWindow.clear(Color::White);
 		drawBoard(m_gameWindow);
-		handleEvents();
 		m_gameWindow.display();
 	}
 }
-//_____________________________
+
+//____________________________
 void Controller::handleEvents()
 {
 	auto event = sf::Event();
@@ -36,25 +38,29 @@ void Controller::handleEvents()
 		}
 	}
 }
-//_______________________________________________
+
+//__________________________________________
 void Controller::exitGame(const Event& event)
 {
 	if (event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
 		m_gameWindow.close();
 }
-//_________________________________________________________
+
+//____________________________________________________
 void Controller::mouseEventReleased(const Event& event)
 {
-	// getting the location of where the mouse was pressed
-	auto location = m_gameWindow.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-
+	auto location = Vector2f(event.mouseMove.x, event.mouseMove.y);
+	m_board.findClick(location);
 }
-//______________________________________________________
+
+//_________________________________________________
 void Controller::mouseEventMoved(const Event& event)
 {
+	auto location = Vector2f(event.mouseMove.x, event.mouseMove.y);
+	m_board.findMovement(location);
 }
 
-//__________________________________________________
+//_____________________________________________
 void Controller::drawBoard(RenderWindow& window)
 {
 	m_board.drawBoard(window);

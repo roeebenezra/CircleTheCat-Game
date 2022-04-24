@@ -19,11 +19,13 @@ class Board
 public:
 	Board();
 	void drawBoard(RenderWindow&)const;
+	void findMovement(Vector2f&);
+	void findClick(Vector2f&);
 
 private:
 	void setBoard();
 	void setFonts();
-	
+
 	CircleShape createCircle(Vector2f &);
 	Text createText(Vector2f& pos);
 
