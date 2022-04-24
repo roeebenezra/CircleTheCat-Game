@@ -12,8 +12,11 @@ void Controller::runGame()
 	while (m_gameWindow.isOpen())
 	{
 		handleEvents();
+
 		m_gameWindow.clear(Color::White);
+
 		drawBoard(m_gameWindow);
+
 		m_gameWindow.display();
 	}
 }
@@ -26,7 +29,7 @@ void Controller::handleEvents()
 	{
 		switch (event.type)
 		{
-		case sf::Event::MouseButtonReleased:
+		case sf::Event::MouseButtonPressed:
 			mouseEventReleased(event);
 			break;
 		case sf::Event::MouseMoved:
@@ -49,7 +52,7 @@ void Controller::exitGame(const Event& event)
 //____________________________________________________
 void Controller::mouseEventReleased(const Event& event)
 {
-	auto location = Vector2f(event.mouseMove.x, event.mouseMove.y);
+	auto location = m_gameWindow.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
 	m_board.findClick(location);
 }
 

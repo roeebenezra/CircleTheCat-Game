@@ -11,9 +11,6 @@
 #include "macros.hpp"
 #include "Resources.hpp"
 
-
-class Data;
-
 class Board
 {
 public:

@@ -22,6 +22,6 @@ private:
 	void mouseEventMoved(const Event&);
 	void exitGame(const Event&);
 	
-	RenderWindow m_gameWindow = { VideoMode(1150, 1000), "Circle the Cat" };
+	RenderWindow m_gameWindow = { VideoMode(900, 720), "Circle the Cat" };
 	Board m_board;
 };
