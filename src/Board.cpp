@@ -5,40 +5,69 @@ Board::Board()
 	setBoard();
 }
 
+//____________________
 void Board::setBoard()
 {
-	setTitle();
-	sf::Vector2f pos = { 35, 50 };
-	for (size_t i = 0; i < BOARD_SIZE; i++) {
-		std::vector<sf::CircleShape> circleRow;
-		for (size_t j = 0; j < BOARD_SIZE; j++)
+	setFonts();
+	Vector2f pos = { 20, 110 };
+	for (size_t i = 0; i < BoardSize; i++) {
+		std::vector<CircleShape> circleRow;
+		for (size_t j = 0; j < BoardSize; j++)
 		{
-			sf::CircleShape circle(35);
-			circle.setPosition(pos);
-			circle.setFillColor(sf::Color::Green);
+			CircleShape circle = createCircle(pos);
 			circleRow.push_back(circle);
-			pos.x += 75;
+			pos.x += X_CircleDistance;
 		}
 		m_board.push_back(circleRow);
-		pos.y += 75;
-		if (i % 2 == 0) pos.x = 60;
-		else pos.x = 35;
+		pos.y += Y_CircleDistance;
+		if (i % 2 == 0) pos.x = CircleLeftOddDistance;
+		else pos.x = CircleLeftEvenDistance;
 	}
 }
 
-void Board::setTitle()
+//____________________________________________
+CircleShape Board::createCircle(Vector2f& pos)
 {
-	m_title.loadFromFile("Title.png");
-	m_spriteTitle.setTexture(m_title);
-	m_spriteTitle.setPosition(400,0);
-}
+	CircleShape circle(CircleSize);
+	circle.setPosition(pos);
+	circle.setFillColor(Color::Green);
+	circle.setOutlineColor(Color::Black);
+	circle.setOutlineThickness(3);
 
-void Board::drawBoard(sf::RenderWindow &window)const 
+	return circle;
+}
+//___________________
+void Board::setFonts()
 {
-	window.draw(m_spriteTitle);
-	for (auto i : m_board)
+	Vector2f pos = { 350, 0 };
+	
+	for (size_t i = 0; i < Texts.size() ; i++)
 	{
-		for (auto j : i)
-			window.draw(j);
+		Text text = createText(pos);
+		text.setString(Texts[i]);
+		if (i == 1) pos.x += X_TextAdd;
+		if (i > 0)  pos.y += Y_TextAdd;
+		m_boardTexts.push_back(text);
 	}
+}
+
+//__________________________________
+Text Board::createText(Vector2f& pos)
+{
+	Text text;
+	text.setFont(Resources::instance().getFont());
+	text.setCharacterSize(FontSize);
+	text.setFillColor(Color::Black);
+	text.setPosition(pos);
+
+	return text;
+}
+
+//______________________________________________
+void Board::drawBoard(RenderWindow &window)const 
+{
+	for (auto i : m_boardTexts)
+		window.draw(i);
+
+
 }

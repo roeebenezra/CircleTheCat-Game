@@ -10,7 +10,7 @@ void Controller::runGame()
 {
 	while (m_gameWindow.isOpen())
 	{
-		m_gameWindow.clear(sf::Color::White);
+		m_gameWindow.clear(Color::White);
 		drawBoard(m_gameWindow);
 		handleEvents();
 		m_gameWindow.display();
@@ -37,25 +37,29 @@ void Controller::handleEvents()
 	}
 }
 //_______________________________________________
-void Controller::exitGame(const sf::Event& event)
+void Controller::exitGame(const Event& event)
 {
 	if (event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
 		m_gameWindow.close();
 }
 //_________________________________________________________
-void Controller::mouseEventReleased(const sf::Event& event)
+void Controller::mouseEventReleased(const Event& event)
 {
 	// getting the location of where the mouse was pressed
-	auto location = m_gameWindow.mapPixelToCoords(
-		{ event.mouseButton.x, event.mouseButton.y });
+	auto location = m_gameWindow.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
+	for (auto i : m_board)
+	{
+		for (auto j : i)
+
+	}
 }
 //______________________________________________________
-void Controller::mouseEventMoved(const sf::Event& event)
+void Controller::mouseEventMoved(const Event& event)
 {
 }
 
-//__________________________
-void Controller::drawBoard(sf::RenderWindow& window)
+//__________________________________________________
+void Controller::drawBoard(RenderWindow& window)
 {
 	m_board.drawBoard(window);
 }

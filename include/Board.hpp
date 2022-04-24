@@ -9,6 +9,8 @@
 #include <memory>
 
 #include "macros.hpp"
+#include "Resources.hpp"
+
 
 class Data;
 
@@ -16,15 +18,16 @@ class Board
 {
 public:
 	Board();
-	void drawBoard(sf::RenderWindow&)const;
+	void drawBoard(RenderWindow&)const;
 
 private:
 	void setBoard();
-	void setTitle();
+	void setFonts();
+	
+	CircleShape createCircle(Vector2f &);
+	Text createText(Vector2f& pos);
 
-	sf::Texture m_title;
-	sf::Sprite m_spriteTitle;
-
-	std::vector<std::vector<sf::Vector2f>> m_levels;
-	std::vector<std::vector<sf::CircleShape>> m_board;
+	std::vector<Text> m_boardTexts;
+	std::vector<std::vector<Vector2f>> m_levels;
+	std::vector<std::vector<CircleShape>> m_board;
 };

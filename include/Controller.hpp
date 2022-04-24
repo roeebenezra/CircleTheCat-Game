@@ -16,12 +16,12 @@ public:
 	void runGame();
 
 private:
-	void drawBoard(sf::RenderWindow&);
+	void drawBoard(RenderWindow&);
 	void handleEvents();
-	void mouseEventReleased(const sf::Event&);
-	void mouseEventMoved(const sf::Event&);
-	void exitGame(const sf::Event&);
+	void mouseEventReleased(const Event&);
+	void mouseEventMoved(const Event&);
+	void exitGame(const Event&);
 	
-	sf::RenderWindow m_gameWindow = { sf::VideoMode(1100, 920), "Circle the Cat" };
+	RenderWindow m_gameWindow = { VideoMode(1150, 1000), "Circle the Cat" };
 	Board m_board;
 };

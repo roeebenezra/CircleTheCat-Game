@@ -1,20 +1,18 @@
 #include "Resources.hpp"
 
-//____________________
+//___________________
 Resources::Resources()
 {
 	loadResources();
 }
-//____________________________
+//_____________________________
 Resources& Resources::instance()
 {
 	static auto resource = Resources();
 	return resource;
 }
-//_____________________________
+//____________________________
 void Resources::loadResources()
 {
-	if (!m_texture.loadFromFile("board.png"))
-		std::cout << "fail to load board\n";
-	m_sprite.setTexture(m_texture);
+	m_textFont.loadFromFile("FontFile.ttf");
 }

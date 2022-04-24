@@ -12,15 +12,11 @@ public:
 	Resources(const Resources&) = delete;
 	void operator=(const Resources&) = delete;
 
-	sf::Sprite& getSprite(const int name) { return m_sprite; }
-	sf::Texture& getTexture(const int name) { return m_texture; }
-	sf::Font& getFont() { return m_font; }
+	Font& getFont() { return m_textFont; }
 
 private:
 	Resources();
 	void loadResources();
 
-	sf::Sprite m_sprite;
-	sf::Texture m_texture;
-	sf::Font m_font;
+	sf::Font m_textFont;
 };
