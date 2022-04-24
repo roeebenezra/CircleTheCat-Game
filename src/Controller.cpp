@@ -1,7 +1,8 @@
 #include "Controller.hpp"
 
 //_____________________
-Controller::Controller()
+Controller::Controller() :
+	m_cat(sf::Vector2f(413, 340))
 {
 	runGame();
 	m_gameWindow.setFramerateLimit(60);
@@ -64,8 +65,9 @@ void Controller::mouseEventMoved(const Event& event)
 	m_board.findMovement(location);
 }
 
-//_____________________________________________
+//______________________________________________
 void Controller::drawBoard(RenderWindow& window)
 {
 	m_board.drawBoard(window);
+	m_cat.showCat(window);
 }

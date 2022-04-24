@@ -2,4 +2,5 @@
                                               "Controller.cpp"
                                               "Resources.cpp"
                                               "Board.cpp"
+                                              "Cat.cpp"
                                               )

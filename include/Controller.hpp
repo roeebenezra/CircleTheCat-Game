@@ -1,5 +1,6 @@
 #pragma once
 #include "Board.hpp"
+#include "Cat.hpp"
 
 #include <stdio.h>
 #include <iostream>
@@ -24,4 +25,5 @@ private:
 	
 	RenderWindow m_gameWindow = { VideoMode(950, 800), "Circle the Cat" };
 	Board m_board;
+	Cat m_cat;
 };
