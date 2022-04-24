@@ -47,11 +47,7 @@ void Controller::mouseEventReleased(const Event& event)
 {
 	// getting the location of where the mouse was pressed
 	auto location = m_gameWindow.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-	for (auto i : m_board)
-	{
-		for (auto j : i)
 
-	}
 }
 //______________________________________________________
 void Controller::mouseEventMoved(const Event& event)

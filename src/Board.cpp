@@ -43,10 +43,10 @@ void Board::setFonts()
 	
 	for (size_t i = 0; i < Texts.size() ; i++)
 	{
-		Text text = createText(pos);
-		text.setString(Texts[i]);
 		if (i == 1) pos.x += X_TextAdd;
 		if (i > 0)  pos.y += Y_TextAdd;
+		Text text = createText(pos);
+		text.setString(Texts[i]);
 		m_boardTexts.push_back(text);
 	}
 }
@@ -69,5 +69,9 @@ void Board::drawBoard(RenderWindow &window)const
 	for (auto i : m_boardTexts)
 		window.draw(i);
 
-
+	for (auto i : m_board)
+	{
+		for (auto j : i)
+			window.draw(j);
+	}
 }
