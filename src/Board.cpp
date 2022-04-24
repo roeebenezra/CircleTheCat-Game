@@ -9,7 +9,7 @@ Board::Board()
 //___________________
 void Board::setBoard()
 {
-	Vector2f pos = { 20, 110 };
+	Vector2f pos = { 30, 110 };
 	for (size_t i = 0; i < BoardSize; i++) {
 		std::vector<CircleShape> circleRow;
 		for (size_t j = 0; j < BoardSize; j++)
@@ -34,8 +34,8 @@ CircleShape Board::createCircle(Vector2f& pos)
 	circle.setPosition(pos);
 	circle.setFillColor(Color{ 0, 255, 0, 127 });
 	circle.setOutlineColor(Color::Black);
-	circle.setOutlineThickness(4);
-
+	circle.setOutlineThickness(3);
+	
 	return circle;
 }
 //___________________
@@ -51,6 +51,8 @@ void Board::setFonts()
 		text.setString(Texts[i]);
 		m_boardTexts.push_back(text);
 	}
+	Texts[2] += std::to_string(m_steps);
+	m_boardTexts[2].setString(Texts[2]);
 }
 
 //__________________________________
@@ -68,6 +70,7 @@ Text Board::createText(Vector2f& pos)
 //______________________________________________
 void Board::drawBoard(RenderWindow& window)const
 {
+	
 	for (auto i : m_boardTexts)
 		window.draw(i);
 
@@ -80,19 +83,26 @@ void Board::drawBoard(RenderWindow& window)const
 void Board::findMovement(Vector2f& loc)
 {
 	for (auto& row : m_board)
+	{
 		for (auto& circle : row)
+		{
 			if (circle.getGlobalBounds().contains(loc))
 			{
-				circle.setOutlineColor(Color{ 50, 70, 55 });
-				circle.setOutlineThickness(5);
-				break;
+				circle.getFillColor() == Color::Black ?
+					circle.setOutlineColor(Color{ 255, 0, 0, 127 }) :
+					circle.setOutlineColor(Color{ 0, 0, 255, 127 });
+				circle.setOutlineThickness(4);
+				return;
 			}
 			else
 			{
 				circle.setOutlineColor(Color::Black);
-				circle.setOutlineThickness(4);
+				circle.setOutlineThickness(3);
 			}
+		}
+	}
 }
+
 //_________________________________
 void Board::findClick(Vector2f& loc)
 {
@@ -100,7 +110,19 @@ void Board::findClick(Vector2f& loc)
 		for (auto& circle : row)
 			if (circle.getGlobalBounds().contains(loc))
 			{
+				if (circle.getFillColor() == Color::Black)
+					return;
+				else
+					stepsCounter();
 				circle.setFillColor(Color::Black);
+				setSteps();
 				return;
 			}
+}
+
+//____________________
+void Board::setSteps()
+{
+	Texts[2].replace(7, std::to_string(m_steps).size(), std::to_string(m_steps));
+	m_boardTexts[2].setString(Texts[2]);
 }

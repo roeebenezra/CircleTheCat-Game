@@ -4,6 +4,7 @@
 Controller::Controller()
 {
 	runGame();
+	m_gameWindow.setFramerateLimit(60);
 }
 
 //_______________________
@@ -30,7 +31,7 @@ void Controller::handleEvents()
 		switch (event.type)
 		{
 		case sf::Event::MouseButtonPressed:
-			mouseEventReleased(event);
+			mouseEventPressed(event);
 			break;
 		case sf::Event::MouseMoved:
 			mouseEventMoved(event);
@@ -50,7 +51,7 @@ void Controller::exitGame(const Event& event)
 }
 
 //____________________________________________________
-void Controller::mouseEventReleased(const Event& event)
+void Controller::mouseEventPressed(const Event& event)
 {
 	auto location = m_gameWindow.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
 	m_board.findClick(location);

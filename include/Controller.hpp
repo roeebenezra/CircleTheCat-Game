@@ -18,10 +18,10 @@ public:
 private:
 	void drawBoard(RenderWindow&);
 	void handleEvents();
-	void mouseEventReleased(const Event&);
+	void mouseEventPressed(const Event&);
 	void mouseEventMoved(const Event&);
 	void exitGame(const Event&);
 	
-	RenderWindow m_gameWindow = { VideoMode(900, 720), "Circle the Cat" };
+	RenderWindow m_gameWindow = { VideoMode(950, 800), "Circle the Cat" };
 	Board m_board;
 };
