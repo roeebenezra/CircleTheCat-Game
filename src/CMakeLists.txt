@@ -4,4 +4,5 @@
                                               "Board.cpp"
                                               "Cat.cpp"
                                               "Bfs.cpp"
+                                              "Screen.cpp"
                                               )

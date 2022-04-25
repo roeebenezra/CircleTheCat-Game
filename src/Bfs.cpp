@@ -25,6 +25,7 @@ void Graph::BFS(int s)
     visited[s] = true;
     queue.push_back(s);
 
+
     // 'i' will be used to get all adjacent
     // vertices of a vertex
     list<int>::iterator i;

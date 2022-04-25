@@ -17,16 +17,11 @@ public:
 	Board();
 	void drawBoard(RenderWindow&)const;
 	void findMovement(Vector2f&);
-	void findClick(Vector2f&);
+	bool findClick(Vector2f&);
 	
-
 private:
 	void setBoard();
-	void setFonts();
-	void setSteps();
-
-	CircleShape createCircle(Vector2f &);	
 	
+	CircleShape createCircle(Vector2f &);	
 	std::vector<std::vector<CircleShape>> m_board;
-
 };

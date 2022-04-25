@@ -1,15 +1,21 @@
+#pragma once
+
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "macros.hpp"
 #include "Resources.hpp"
 
-
-class Window
+class Screen
 {
-public :
-	Widow();
-	void stepsCounter() { m_steps++; }
+public:
+	Screen();
+	void drawScreen(RenderWindow& window)const;
+	void setSteps();
+
 private:
+	void setFonts();
+	void stepsCounter() { m_steps++; }
+
 	int m_steps = 0;
 	Text createText(Vector2f& pos);
 	std::vector<Text> m_boardTexts;

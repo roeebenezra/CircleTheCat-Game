@@ -1,4 +1,6 @@
 #pragma once
+
+#include "Screen.hpp"
 #include "Board.hpp"
 #include "Cat.hpp"
 
@@ -24,6 +26,7 @@ private:
 	void exitGame(const Event&);
 	
 	RenderWindow m_gameWindow = { VideoMode(950, 800), "Circle the Cat" };
+	Screen m_screen;
 	Board m_board;
 	Cat m_cat;
 };
