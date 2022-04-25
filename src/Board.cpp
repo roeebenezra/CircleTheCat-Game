@@ -1,11 +1,11 @@
 #include "Board.hpp"
 
+//____________
 Board::Board()
 {
 	setFonts();
 	setBoard();
 }
-
 //___________________
 void Board::setBoard()
 {
@@ -26,7 +26,6 @@ void Board::setBoard()
 			pos.x = CircleLeftEvenDistance;
 	}
 }
-
 //___________________________________________
 CircleShape Board::createCircle(Vector2f& pos)
 {
@@ -54,7 +53,6 @@ void Board::setFonts()
 	Texts[2] += std::to_string(m_steps);
 	m_boardTexts[2].setString(Texts[2]);
 }
-
 //__________________________________
 Text Board::createText(Vector2f& pos)
 {
@@ -66,11 +64,9 @@ Text Board::createText(Vector2f& pos)
 
 	return text;
 }
-
 //______________________________________________
 void Board::drawBoard(RenderWindow& window)const
 {
-	
 	for (auto i : m_boardTexts)
 		window.draw(i);
 
@@ -78,7 +74,6 @@ void Board::drawBoard(RenderWindow& window)const
 		for (auto j : i)
 			window.draw(j);
 }
-
 //____________________________________
 void Board::findMovement(Vector2f& loc)
 {
@@ -102,7 +97,6 @@ void Board::findMovement(Vector2f& loc)
 		}
 	}
 }
-
 //_________________________________
 void Board::findClick(Vector2f& loc)
 {
@@ -119,7 +113,6 @@ void Board::findClick(Vector2f& loc)
 				return;
 			}
 }
-
 //____________________
 void Board::setSteps()
 {
