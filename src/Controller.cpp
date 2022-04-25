@@ -2,7 +2,7 @@
 
 //_____________________
 Controller::Controller() :
-	m_cat(sf::Vector2f(413, 340))
+	m_cat(sf::Vector2f(400, 320))
 {
 	runGame();
 	m_gameWindow.setFramerateLimit(60);
