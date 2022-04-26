@@ -6,13 +6,13 @@
 using namespace sf;
 
 const int BoardSize = 11;
-const int CircleSize = 25;
-const int FontSize = 80;
+const int CircleSize = 35;
+const int FontSize = 100;
 
-const int X_TextAdd = 500;
-const int Y_TextAdd = 150;
+const int X_TextAdd = 600;
+const int Y_TextAdd = 100;
 
-const int X_CircleDistance = 65;
-const int Y_CircleDistance = 60;
-const int CircleLeftOddDistance = 60;
-const int CircleLeftEvenDistance = 30;
+const int X_CircleDistance = 85;
+const int Y_CircleDistance = 80;
+const int CircleLeftOddDistance = 70;
+const int CircleLeftEvenDistance = 35;

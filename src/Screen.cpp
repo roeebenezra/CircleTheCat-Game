@@ -8,7 +8,7 @@ Screen::Screen()
 //_____________________
 void Screen::setFonts()
 {
-	Vector2f pos = { 300, 0 };
+	Vector2f pos = { 400, 0 };
 
 	for (size_t i = 0; i < Texts.size(); i++)
 	{
