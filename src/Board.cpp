@@ -8,7 +8,7 @@ Board::Board()
 //___________________
 void Board::setBoard()
 {
-	Vector2f pos = { 30, 110 };
+	Vector2f pos = { 35, 150 };
 	for (size_t i = 0; i < BoardSize; i++) {
 		std::vector<CircleShape> circleRow;
 		for (size_t j = 0; j < BoardSize; j++)

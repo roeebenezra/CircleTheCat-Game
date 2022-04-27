@@ -13,7 +13,7 @@
 class Cat
 {
 public:
-	Cat(const sf::Vector2f&, Board*);
+	Cat(Board*);
 	void showCat(sf::RenderWindow& window) const { window.draw(m_catSprite); }
 	void setCatPosition();
 

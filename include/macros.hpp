@@ -9,7 +9,7 @@ const int BoardSize = 11;
 const int CircleSize = 35;
 const int FontSize = 100;
 
-const int X_TextAdd = 600;
+const int X_TextAdd = 650;
 const int Y_TextAdd = 100;
 
 const int X_CircleDistance = 85;

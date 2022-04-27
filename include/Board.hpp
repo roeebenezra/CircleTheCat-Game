@@ -18,7 +18,7 @@ public:
 	void drawBoard(RenderWindow&)const;
 	void findMovement(Vector2f&);
 	bool findClick(Vector2f&);
-	
+    const CircleShape& getCircle(auto row, auto col) {return m_board[row][col];}
 private:
 	void setBoard();
 	
