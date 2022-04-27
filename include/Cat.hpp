@@ -1,7 +1,6 @@
 #pragma once
 #include "Board.hpp"
 #include "Bfs.hpp"
-
 #include <stdio.h>
 #include <iostream>
 #include <SFML/Graphics.hpp>
