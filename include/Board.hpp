@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -18,10 +17,10 @@ public:
 	void drawBoard(RenderWindow&)const;
 	void findMovement(Vector2f&);
 	bool findClick(Vector2f&);
-    const CircleShape& getCircle(auto row, auto col) {return m_board[row][col];}
+    const CircleShape& getCircle(size_t row, size_t col) {return m_board[row][col];}
 private:
 	void setBoard();
 	
-	CircleShape createCircle(Vector2f &);	
+	static CircleShape createCircle(Vector2f &);
 	std::vector<std::vector<CircleShape>> m_board;
 };

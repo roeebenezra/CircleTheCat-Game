@@ -13,14 +13,14 @@ public:
 	void operator=(const Resources&) = delete;
 
 	Font& getFont() { return m_textFont; }
-	sf::Sprite& getSprite() { return m_catSprite; }
-	sf::Texture& getTexture() { return m_catTexture; }
+	Sprite& getSprite() { return m_catSprite; }
+	Texture& getTexture() { return m_catTexture; }
 
 private:
 	Resources();
 	void loadResources();
 
-	sf::Font m_textFont;
-	sf::Sprite m_catSprite;
-	sf::Texture m_catTexture;
+	Font m_textFont;
+	Sprite m_catSprite;
+	Texture m_catTexture;
 };

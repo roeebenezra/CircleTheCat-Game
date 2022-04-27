@@ -39,14 +39,14 @@ CircleShape Board::createCircle(Vector2f& pos)
 //______________________________________________
 void Board::drawBoard(RenderWindow& window)const
 {
-	for (auto i : m_board)
-		for (auto j : i)
+	for (auto const &i : m_board)
+		for (auto const &j : i)
 			window.draw(j);
 }
 //____________________________________
 void Board::findMovement(Vector2f& loc)
 {
-	for (auto& row : m_board)
+	for (auto &row : m_board)
 	{
 		for (auto& circle : row)
 		{

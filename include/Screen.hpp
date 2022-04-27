@@ -16,7 +16,7 @@ private:
 	void setFonts();
 	void stepsCounter() { m_steps++; }
 
-	int m_steps = 0;
+	unsigned int m_steps = 0;
 	Text createText(Vector2f& pos);
 	std::vector<Text> m_boardTexts;
 	std::vector<std::vector<Vector2f>> m_levels;

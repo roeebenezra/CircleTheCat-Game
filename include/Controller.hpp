@@ -1,10 +1,8 @@
 #pragma once
-
 #include "Screen.hpp"
 #include "Board.hpp"
 #include "Cat.hpp"
 
-#include <stdio.h>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -29,4 +27,5 @@ private:
 	Screen m_screen;
 	Board m_board;
 	Cat m_cat;
+    NextMove m_nextMove = {5,6};
 };

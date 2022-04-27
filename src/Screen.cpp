@@ -35,7 +35,7 @@ Text Screen::createText(Vector2f& pos)
 //________________________________________________
 void Screen::drawScreen(RenderWindow& window)const
 {
-	for (auto i : m_boardTexts)
+	for (auto const &i : m_boardTexts)
 		window.draw(i);
 }
 //____________________

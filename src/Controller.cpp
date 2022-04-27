@@ -2,7 +2,7 @@
 
 //_____________________
 Controller::Controller() :
-	m_cat(&m_board)
+	m_cat(m_board)
 {
 	runGame();
 }
@@ -50,13 +50,13 @@ void Controller::mouseEventPressed(const Event& event)
 	if (m_board.findClick(location))
 	{
 		m_screen.setSteps();
-		m_cat.setCatPosition();
+		m_cat.setCatPosition(m_nextMove);
 	}
 }
 //_________________________________________________
 void Controller::mouseEventMoved(const Event& event)
 {
-	auto location = Vector2f(event.mouseMove.x, event.mouseMove.y);
+	auto location = Vector2f(float(event.mouseMove.x), float(event.mouseMove.y));
 	m_board.findMovement(location);
 }
 //______________________________________________
