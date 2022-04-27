@@ -17,3 +17,4 @@ private:
     // Pointer to an array containing adjacency
     list<int>* m_adj; // lists
 };
+
