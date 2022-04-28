@@ -3,6 +3,6 @@
                                               "Resources.cpp"
                                               "Board.cpp"
                                               "Cat.cpp"
-                                              "Bfs.cpp"
+                                              "MoveObject.cpp"
                                               "Screen.cpp"
                                               )
