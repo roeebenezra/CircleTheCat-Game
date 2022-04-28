@@ -27,5 +27,6 @@ private:
 	Screen m_screen;
 	Board m_board;
 	Cat m_cat;
-    NextMove m_nextMove = {5,6};
+    sf::Vector2i m_nextMove = {5,6};
+    bool m_catWon;
 };

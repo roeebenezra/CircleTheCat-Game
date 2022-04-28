@@ -2,8 +2,9 @@
 
 //_____________________
 Controller::Controller() :
-	m_cat(m_board)
+	m_cat(m_board), m_catWon(false)
 {
+    m_board.setRandomBlackCircles();
 	runGame();
 }
 //_______________________
@@ -35,6 +36,10 @@ void Controller::handleEvents()
 			exitGame(event);
 			break;
 		}
+        if(m_catWon){
+            std::cout << "Cat Won!\n";
+            m_gameWindow.close();
+        }
 	}
 }
 //__________________________________________
@@ -47,17 +52,19 @@ void Controller::exitGame(const Event& event)
 void Controller::mouseEventPressed(const Event& event)
 {
 	auto location = m_gameWindow.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-	if (m_board.findClick(location))
+	if (m_board.findClick(location, m_cat.getCatCoordinates()))
 	{
 		m_screen.setSteps();
-		m_cat.setCatPosition(m_nextMove);
+        m_cat.move();
+        if(m_cat.checkCatWon())
+            m_catWon = true;
 	}
 }
 //_________________________________________________
 void Controller::mouseEventMoved(const Event& event)
 {
 	auto location = Vector2f(float(event.mouseMove.x), float(event.mouseMove.y));
-	m_board.findMovement(location);
+	m_board.findMovement(location, m_cat.getCatCoordinates());
 }
 //______________________________________________
 void Controller::drawBoard(RenderWindow& window)
