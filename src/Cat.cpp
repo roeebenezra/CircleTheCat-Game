@@ -38,7 +38,7 @@ bool Cat::checkCatWon()const
         Clock clock;
         while (clock.getElapsedTime().asSeconds() < 1)
         {
-            
+           
         }
         return true;
     }

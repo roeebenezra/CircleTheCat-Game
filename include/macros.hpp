@@ -21,6 +21,7 @@ const int CircleLeftEvenDistance = 35;
 
 const int dRow[] = {-1, -1, 0, 0, 1, 1};
 const int dCol[] = {0, 1, -1, 1, 0, 1};
+
 const int amountOfDir = 6;
 
 using BoardVector = vector<std::vector<CircleShape>>;

@@ -9,10 +9,8 @@ public:
                               const sf::Vector2i &);
 private:
     void initNeighborsList();
-    bool solve(const BoardVector& ,
-                const sf::Vector2i& ,
-                bool[][BoardSize],
-                std::vector<sf::Vector2i> &);
+    bool bfs(const BoardVector&, const sf::Vector2i&,
+                bool[][BoardSize], vector<sf::Vector2i> &);
  
     bool isValid(const BoardVector&,
                   bool[][BoardSize],

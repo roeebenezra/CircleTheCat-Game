@@ -13,13 +13,13 @@ sf::Vector2i MoveObject::getNextMove(const BoardVector &board,
     bool visited[BoardSize][BoardSize] = { {false} };
     std::vector<sf::Vector2i> prev;
 
-    if(!solve(board, src, visited, prev))
-        return src;
+    if(!bfs(board, src, visited, prev))
+        return src; //return source pos
     return prev.front();
 }
 //___________________________________________
 // Function to perform the BFS traversal
-bool MoveObject::solve(const BoardVector &board,
+bool MoveObject::bfs(const BoardVector &board,
                         const sf::Vector2i &src,
                         bool visited[][BoardSize],
                         std::vector<sf::Vector2i>& prev) 
