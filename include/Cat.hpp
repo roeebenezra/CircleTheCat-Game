@@ -12,9 +12,9 @@ public:
     void move();
     sf::Vector2i getCatCoordinates()const { return m_place; }
     bool checkCatWon() const;
+    void setCatPosition(const sf::Vector2i &);
 
 private:
-    void setCatPosition(const sf::Vector2i &);
     Sprite m_catSprite;
     Board *m_board;
     sf::Vector2i m_place;

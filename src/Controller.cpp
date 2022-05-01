@@ -2,7 +2,7 @@
 
 //_____________________
 Controller::Controller() :
-	m_cat(m_board), m_catWon(false)
+	m_cat(m_board), m_catWon(false), m_nextMove({5,5})
 {
     m_board.setRandomBlackCircles();
 	runGame();
@@ -37,8 +37,7 @@ void Controller::handleEvents()
 			break;
 		}
         if(m_catWon){
-            std::cout << "Cat Won!\n";
-            m_gameWindow.close();
+			handleCatWon();
         }
 	}
 }
@@ -48,7 +47,7 @@ void Controller::exitGame(const Event& event)
 	if (event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
 		m_gameWindow.close();
 }
-//____________________________________________________
+//___________________________________________________
 void Controller::mouseEventPressed(const Event& event)
 {
 	auto location = m_gameWindow.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
@@ -72,4 +71,16 @@ void Controller::drawBoard(RenderWindow& window)
 	m_board.drawBoard(window);
 	m_cat.showCat(window);
 	m_screen.drawScreen(window);
+}
+//____________________________
+void Controller::handleCatWon()
+{
+	m_screen.drawGameOver(m_gameWindow);
+	Board board;
+	m_board = board;
+	Screen screen;
+	m_screen = screen;
+	Cat cat(m_board);
+	m_cat = cat;
+	m_catWon = false;
 }

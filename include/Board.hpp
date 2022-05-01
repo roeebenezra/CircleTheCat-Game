@@ -14,8 +14,10 @@ public:
 
     void drawBoard(RenderWindow &) const;
     void setRandomBlackCircles();
+    void restartLevel();
     void findMovement(Vector2f &, const Vector2i&);
     bool findClick(Vector2f &, const Vector2i&);
+
     const BoardVector getBoard() const { return m_board; }
     const CircleShape &getCircle(size_t row, size_t col) { return m_board[row][col]; }
 

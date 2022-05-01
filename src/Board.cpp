@@ -1,12 +1,14 @@
 #include "Board.hpp"
 
 //____________
-Board::Board() {
+Board::Board() 
+{
     setBoard();
 }
 
 //___________________
-void Board::setBoard() {
+void Board::setBoard() 
+{
     Vector2f pos = {35, 150};
     for (size_t i = 0; i < BoardSize; i++) {
         std::vector<CircleShape> circleRow;
@@ -22,10 +24,12 @@ void Board::setBoard() {
         else
             pos.x = CircleLeftEvenDistance;
     }
+    setRandomBlackCircles();
 }
 
 //___________________________________________
-CircleShape Board::createCircle(Vector2f &pos) {
+CircleShape Board::createCircle(Vector2f &pos)
+{
     CircleShape circle(CircleSize);
     circle.setPosition(pos);
     circle.setFillColor(Color{0, 255, 0, 127});
@@ -35,7 +39,8 @@ CircleShape Board::createCircle(Vector2f &pos) {
 }
 
 //______________________________________________
-void Board::drawBoard(RenderWindow &window) const {
+void Board::drawBoard(RenderWindow &window) const
+{
     for (auto const &i: m_board)
         for (auto const &j: i)
             window.draw(j);
@@ -43,28 +48,35 @@ void Board::drawBoard(RenderWindow &window) const {
 
 //____________________________________
 void Board::findMovement(Vector2f &loc,
-                         const Vector2i &catLoc) {
-    for (int i = 0; i < BoardSize; i++)
-        for (int j = 0; j < BoardSize; j++)
-            if (m_board[i][j].getGlobalBounds().contains(loc)) {
+                         const Vector2i &catLoc) 
+{
+    for (int i = 0; i < BoardSize; i++){
+        for (int j = 0; j < BoardSize; j++) {
+            if (m_board[i][j].getGlobalBounds().contains(loc))
+            {
                 m_board[i][j].getFillColor() == Color::Black ||
-                (i == catLoc.x && j == catLoc.y) ?
-                m_board[i][j].setOutlineColor(Color{255, 0, 0, 127}) :
-                m_board[i][j].setOutlineColor(Color{0, 0, 255, 127});
+                    (i == catLoc.x && j == catLoc.y) ?
+                    m_board[i][j].setOutlineColor(Color{ 255, 0, 0, 127 }) :
+                    m_board[i][j].setOutlineColor(Color{ 0, 0, 255, 127 });
                 m_board[i][j].setOutlineThickness(4);
                 return;
-            } else {
+            }
+            else {
                 m_board[i][j].setOutlineColor(Color::Black);
                 m_board[i][j].setOutlineThickness(3);
             }
+        }
+    }
 }
 
 //_________________________________
 bool Board::findClick(Vector2f &loc,
-                      const Vector2i &catLoc) {
+                      const Vector2i &catLoc) 
+{
     for (int i = 0; i < BoardSize; i++)
         for (int j = 0; j < BoardSize; j++)
-            if (m_board[i][j].getGlobalBounds().contains(loc)) {
+            if (m_board[i][j].getGlobalBounds().contains(loc)) 
+            {
                 if (m_board[i][j].getFillColor() == Color::Black
                     || (i == catLoc.x && j == catLoc.y))
                     return false;
@@ -76,14 +88,28 @@ bool Board::findClick(Vector2f &loc,
 }
 
 //________________________________
-void Board::setRandomBlackCircles() {
-    int size = 15, x, y;
-    srand(17);
-    for (int i = 0; i < size; ++i) {
-        do {
+void Board::setRandomBlackCircles() 
+{
+    int size = 10, x, y;
+    srand(static_cast<unsigned>(time(nullptr)));
+
+    for (int i = 0; i < size; ++i) 
+    {
+        do 
+        {
             x = rand() % BoardSize;
             y = rand() % BoardSize;
-        } while (m_board[x][y].getFillColor() == Color::Black);
+            if (x == 5 && y == 5)
+                continue;
+        }
+        while (m_board[x][y].getFillColor() == Color::Black);
+ 
         m_board[x][y].setFillColor(Color::Black);
     }
+}
+
+void Board::restartLevel()
+{
+    setBoard();
+    setRandomBlackCircles();
 }
