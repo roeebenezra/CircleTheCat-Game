@@ -4,10 +4,11 @@
 
 class MoveObject {
 public:
-    MoveObject() {}
+    MoveObject() { initNeighborsList(); }
     sf::Vector2i getNextMove(const BoardVector&,
                               const sf::Vector2i &);
 private:
+    void initNeighborsList();
     bool solve(const BoardVector& ,
                 const sf::Vector2i& ,
                 bool[][BoardSize],

@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
+using namespace std;
 
 const int BoardSize = 11;
 const int CircleSize = 30;
@@ -22,4 +23,6 @@ const int dRow[] = {-1, -1, 0, 0, 1, 1};
 const int dCol[] = {0, 1, -1, 1, 0, 1};
 const int amountOfDir = 6;
 
-using BoardVector = std::vector<std::vector<CircleShape>>;
+using BoardVector = vector<std::vector<CircleShape>>;
+const Vector2i StartPos = { 5,5 };		//cat start point
+

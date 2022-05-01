@@ -1,7 +1,8 @@
 #include "Cat.hpp"
 
-//______________________________________________________
-Cat::Cat(Board &board) : m_board(&board), m_catWon(false) 
+//___________________
+Cat::Cat(Board &board)
+    : m_board(&board), m_catWon(false) 
 {
     m_catSprite.setTexture(Resources::instance().getTexture());
     m_catSprite.setTextureRect(IntRect(375, 7, 100, 73));
@@ -16,9 +17,10 @@ Cat::Cat(Board &board) : m_board(&board), m_catWon(false)
 void Cat::setCatPosition(const sf::Vector2i &nextMove) 
 {
     m_catSprite.setPosition(m_board->getCircle(nextMove.x, nextMove.y).getPosition());
+    m_place = nextMove;
 }
 
-//______________
+//_____________
 void Cat::move() 
 {
     Vector2i newMove = getNextMove(m_board->getBoard(), m_place);
@@ -28,12 +30,18 @@ void Cat::move()
     setCatPosition(m_place);
 }
 
-//__________________________
+//_________________________
 bool Cat::checkCatWon()const 
 {
-    if (m_place.x == BoardSize - 1 || m_place.x == 0
-        || m_place.y == BoardSize - 1 || m_place.y == 0)
+    if (m_place.x == BoardSize - 1 || m_place.x == 0 || m_place.y == BoardSize - 1 || m_place.y == 0)
+    {
+        Clock clock;
+        while (clock.getElapsedTime().asSeconds() < 1)
+        {
+            
+        }
         return true;
+    }
 
     return false;
 }

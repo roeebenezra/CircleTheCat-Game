@@ -1,5 +1,11 @@
 #include "MoveObject.hpp"
 
+//_________________________________
+void MoveObject::initNeighborsList()
+{
+
+}
+
 //___________________________________________________________
 sf::Vector2i MoveObject::getNextMove(const BoardVector &board,
                                       const sf::Vector2i &src)

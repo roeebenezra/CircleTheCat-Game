@@ -99,17 +99,28 @@ void Board::setRandomBlackCircles()
         {
             x = rand() % BoardSize;
             y = rand() % BoardSize;
-            if (x == 5 && y == 5)
-                continue;
         }
         while (m_board[x][y].getFillColor() == Color::Black);
- 
+        if (x == 5 && y == 5)
+        {
+            i--;
+            continue;
+        }
         m_board[x][y].setFillColor(Color::Black);
     }
 }
-
+//_______________________
 void Board::restartLevel()
 {
     setBoard();
+    setRandomBlackCircles();
+}
+//_______________________
+void Board::restartBoard()
+{
+    for (auto& i : m_board)
+        for (auto& j : i)
+            j.setFillColor(Color{ 0, 255, 0, 127 });
+
     setRandomBlackCircles();
 }

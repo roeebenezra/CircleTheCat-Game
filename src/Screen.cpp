@@ -9,30 +9,27 @@ Screen::Screen()
 void Screen::setFonts()
 {
 	Vector2f pos = { 400, 0 };
-
 	for (size_t i = 0; i < Texts.size() ; i++)
 	{
 		if (i == 1) pos.x += X_TextAdd;
 		if (i > 0)  pos.y += Y_TextAdd;
-		Text text = createText(pos);
-		text.setString(Texts[i]);
+		Text text = createText(pos,FontSize,Texts[i],Color::Black);
 		m_boardTexts.push_back(text);
 	}
 	Texts[2] += std::to_string(m_steps);
 	m_boardTexts[2].setString(Texts[2]);
 }
-//____________________________________
-Text Screen::createText(Vector2f& pos)const
+//_______________________________________
+const Text Screen::createText(Vector2f pos, unsigned int size,
+						string name, Color color)const
 {
-	Text text;
-	text.setFont(Resources::instance().getFont());
-	text.setCharacterSize(FontSize);
-	text.setFillColor(Color::Black);
+	Text text(name, Resources::instance().getFont(),size);
+	text.setFillColor(color);
 	text.setPosition(pos);
 
 	return text;
 }
-//________________________________________________
+//_______________________________________________
 void Screen::drawScreen(RenderWindow& window)const
 {
 	for (auto const &i : m_boardTexts)
@@ -46,14 +43,10 @@ void Screen::setSteps()
 	m_boardTexts[2].setString(Texts[2]);
 }
 
+//_________________________________________________
 void Screen::drawGameOver(RenderWindow& window)const
 {
-	Vector2f pos{ 250, 300 };
-	Text text = createText(pos);
-	text.setCharacterSize(250);
-	text.setString("Game Over");
-	text.setColor(Color{ 255, 0, 0, 100 });
-
+	Text text = createText({ 250, 300 }, 250, "Game Over", Color::Red);
 	Clock clock;
 	while (clock.getElapsedTime().asSeconds() < 1)
 	{

@@ -29,5 +29,4 @@ private:
 	Board m_board;
 	Cat m_cat;
     sf::Vector2i m_nextMove;
-    bool m_catWon;
 };

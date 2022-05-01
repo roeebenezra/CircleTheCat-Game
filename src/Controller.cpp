@@ -1,12 +1,12 @@
 #include "Controller.hpp"
 
 //_____________________
-Controller::Controller() :
-	m_cat(m_board), m_catWon(false), m_nextMove({5,5})
+Controller::Controller() 
+	:m_cat(m_board), m_nextMove({5,5})
 {
-    m_board.setRandomBlackCircles();
 	runGame();
 }
+
 //_______________________
 void Controller::runGame()
 {
@@ -18,6 +18,7 @@ void Controller::runGame()
 		m_gameWindow.display();
 	}
 }
+
 //____________________________
 void Controller::handleEvents()
 {
@@ -36,17 +37,16 @@ void Controller::handleEvents()
 			exitGame(event);
 			break;
 		}
-        if(m_catWon){
-			handleCatWon();
-        }
 	}
 }
+
 //__________________________________________
 void Controller::exitGame(const Event& event)
 {
 	if (event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
 		m_gameWindow.close();
 }
+
 //___________________________________________________
 void Controller::mouseEventPressed(const Event& event)
 {
@@ -55,32 +55,30 @@ void Controller::mouseEventPressed(const Event& event)
 	{
 		m_screen.setSteps();
         m_cat.move();
-        if(m_cat.checkCatWon())
-            m_catWon = true;
+		if (m_cat.checkCatWon())
+			handleCatWon();
 	}
 }
+
 //_________________________________________________
 void Controller::mouseEventMoved(const Event& event)
 {
 	auto location = Vector2f(float(event.mouseMove.x), float(event.mouseMove.y));
 	m_board.findMovement(location, m_cat.getCatCoordinates());
 }
-//______________________________________________
+
+//_____________________________________________
 void Controller::drawBoard(RenderWindow& window)
 {
 	m_board.drawBoard(window);
 	m_cat.showCat(window);
 	m_screen.drawScreen(window);
 }
+
 //____________________________
 void Controller::handleCatWon()
 {
 	m_screen.drawGameOver(m_gameWindow);
-	Board board;
-	m_board = board;
-	Screen screen;
-	m_screen = screen;
-	Cat cat(m_board);
-	m_cat = cat;
-	m_catWon = false;
+	m_board.restartBoard();
+	m_cat.setCatPosition(StartPos);
 }

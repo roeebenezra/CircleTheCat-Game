@@ -9,16 +9,16 @@ class Screen
 {
 public:
 	Screen();
-	void drawScreen(RenderWindow&)const;
 	void setSteps();
+	void drawScreen(RenderWindow&)const;
 	void drawGameOver(RenderWindow&)const;
 
 private:
 	void setFonts();
+	const Text createText(Vector2f, unsigned int, string, Color)const;
 	void stepsCounter() { m_steps++; }
-
 	unsigned int m_steps = 0;
-	Text createText(Vector2f& pos)const;
+
 	std::vector<Text> m_boardTexts;
 	std::vector<std::vector<Vector2f>> m_levels;
 	std::vector<std::string> Texts = { "Circle The Cat", "Level: ", "Steps: " };
