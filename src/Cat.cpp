@@ -19,9 +19,8 @@ void Cat::setCatPosition(const sf::Vector2i &nextMove) {
 //_____________
 void Cat::move() {
     Vector2i newMove = getNextMove(m_board->getBoard());
-    if (newMove == getMovingObjectPLace()) {
+    if (newMove == getMovingObjectPLace())
         return;
-    }
     setCatPosition(newMove);
 }
 

@@ -46,13 +46,16 @@ void Controller::exitGame(const Event &event) {
 //___________________________________________________
 void Controller::mouseEventPressed(const Event &event) {
     auto location = m_gameWindow.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
-    if (m_board.findClick(location, m_cat.getCatCoordinates())) {
+    if (m_board.ClickOnBoard(location, m_cat.getCatCoordinates())) {
+        m_moves.emplace_back(pair<Vector2i, Vector2i>(m_cat.getCatPos(), m_board.getCurrClick()));
         m_screen.setSteps();
         m_cat.move();
         if (m_cat.checkCatWon())
             m_gameOver = true;
         if (m_cat.handleCatTrapped())
             m_userWon = true;
+      if (m_screen.clickOnUndo(location))
+        handleClickOnUndo();
     }
 }
 
@@ -79,4 +82,14 @@ void Controller::handleEnd() {
     m_cat.setCatPosition(StartPos);
     m_gameOver = false;
     m_userWon = false;
+}
+
+//_________________________________
+void Controller::handleClickOnUndo() {
+    if (m_moves.empty())
+        return;
+    m_cat.setCatPosition(m_moves.back().first);
+    m_board.setBoardCircle(m_moves.back().second);
+    m_screen.stepsCounterDown();
+    m_moves.pop_back();
 }

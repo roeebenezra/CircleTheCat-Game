@@ -9,6 +9,7 @@ sf::Vector2i MoveObject::getNextMove(const BoardVector &board) {
     if (bfs(board, e, visited, prev)) {
         return reversePrev(prev, e);
     }
+    m_moves.emplace_back(prev.front());
     std::cout << "no path, cat trapped\n";
     return m_place;
 }
@@ -50,7 +51,6 @@ bool MoveObject::bfs(const BoardVector &board,
                 prev[adjx][adjy] = sf::Vector2i(x, y);
 //                std::cout << "parent2: (" << x << ", " << y << ")" << std::endl;
 //                std::cout << "neighbor2: (" << adjx << ", " << adjy << ")" << std::endl;
-
                 if (adjx == 10 || adjx == 0 || adjy == 0 || adjy == 10)
                     return true;
             }

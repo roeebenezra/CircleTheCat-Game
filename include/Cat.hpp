@@ -5,9 +5,10 @@
 #include "macros.hpp"
 #include <SFML/Graphics.hpp>
 
-class Cat  : public MoveObject {
+class Cat : public MoveObject {
 public:
     explicit Cat(Board &);
+
     void showCat(RenderWindow &window) const { window.draw(m_catSprite); }
     void move();
     bool handleCatTrapped()const;

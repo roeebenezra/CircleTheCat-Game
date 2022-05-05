@@ -45,11 +45,11 @@ void Board::drawBoard(RenderWindow &window) const {
 //____________________________________
 void Board::findMovement(Vector2f &loc,
                          const Vector2i &catLoc) {
-    for (int i = 0; i < BoardSize; i++) {
-        for (int j = 0; j < BoardSize; j++) {
+    for (size_t i = 0; i < BoardSize; i++)
+        for (size_t j = 0; j < BoardSize; j++)
             if (m_board[i][j].getGlobalBounds().contains(loc)) {
                 m_board[i][j].getFillColor() == Color::Black ||
-                (i == catLoc.x && j == catLoc.y) ?
+                (i == size_t(catLoc.x) && j == size_t(catLoc.y)) ?
                 m_board[i][j].setOutlineColor(Color{255, 0, 0, 127}) :
                 m_board[i][j].setOutlineColor(Color{0, 0, 255, 127});
                 m_board[i][j].setOutlineThickness(4);
@@ -58,21 +58,21 @@ void Board::findMovement(Vector2f &loc,
                 m_board[i][j].setOutlineColor(Color::Black);
                 m_board[i][j].setOutlineThickness(3);
             }
-        }
-    }
 }
 
 //_________________________________
-bool Board::findClick(Vector2f &loc,
-                      const Vector2i &catLoc) {
-    for (int i = 0; i < BoardSize; i++)
-        for (int j = 0; j < BoardSize; j++)
+bool Board::ClickOnBoard(Vector2f &loc,
+                         const Vector2i &catLoc) {
+    for (size_t i = 0; i < BoardSize; i++)
+        for (size_t j = 0; j < BoardSize; j++)
             if (m_board[i][j].getGlobalBounds().contains(loc)) {
                 if (m_board[i][j].getFillColor() == Color::Black
-                    || (i == catLoc.x && j == catLoc.y))
+                    || (i == size_t(catLoc.x) && j == size_t(catLoc.y)))
                     return false;
-                else
+                else {
+                    m_currClick = {int(i), int(j)};
                     m_board[i][j].setFillColor(Color::Black);
+                }
                 return true;
             }
     return false;
@@ -94,16 +94,15 @@ void Board::setRandomBlackCircles() {
 }
 
 //_______________________
-void Board::restartLevel() {
-    setBoard();
-    setRandomBlackCircles();
-}
-
-//_______________________
 void Board::restartBoard() {
     for (auto &i: m_board)
         for (auto &j: i)
             j.setFillColor(Color{0, 255, 0, 127});
 
     setRandomBlackCircles();
+}
+
+//______________________
+void Board::setBoardCircle(Vector2i &pos) {
+    m_board[size_t(pos.x)][size_t(pos.y)].setFillColor(Color{0, 255, 0, 127});
 }

@@ -4,6 +4,7 @@
 #include "macros.hpp"
 
 class MoveObject {
+  
 public:
     MoveObject(const sf::Vector2i& start){ m_place = start; };
 
@@ -26,6 +27,6 @@ private:
     sf::Vector2i reversePrev(sf::Vector2i [BoardSize][BoardSize],
                              const sf::Vector2i &);
 
-    [[noreturn]] sf::Vector2i returnRandomMove(const BoardVector &);
+    sf::Vector2i returnRandomMove(const BoardVector &);
     sf::Vector2i m_place;
 };
