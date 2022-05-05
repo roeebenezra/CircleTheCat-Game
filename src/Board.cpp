@@ -80,17 +80,15 @@ bool Board::ClickOnBoard(Vector2f &loc,
 
 //________________________________
 void Board::setRandomBlackCircles() {
-    int size = 10, x, y;
+    int size = 14, x, y;
     srand(static_cast<unsigned>(time(nullptr)));
+
     for (int i = 0; i < size; ++i) {
         do {
             x = rand() % BoardSize;
             y = rand() % BoardSize;
-        } while (m_board[x][y].getFillColor() == Color::Black);
-        if (x == 5 && y == 5) {
-            i--;
-            continue;
-        }
+        } while (m_board[x][y].getFillColor() == Color::Black ||
+                 (x == StartPos.x && y == StartPos.y));
         m_board[x][y].setFillColor(Color::Black);
     }
 }

@@ -7,6 +7,7 @@
 
 class Screen {
 public:
+
     Screen();
 
     void setSteps();
@@ -18,6 +19,8 @@ public:
     void drawScreen(RenderWindow &) const;
 
     void drawGameOver(RenderWindow &) const;
+  
+    void drawUserWon(RenderWindow&)const;
 
     void resetSteps();
 

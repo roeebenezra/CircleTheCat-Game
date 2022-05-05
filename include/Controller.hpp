@@ -30,11 +30,13 @@ private:
 
     void exitGame(const Event &);
 
-    void handleCatWon();
+    void handleEnd();
 
     RenderWindow m_gameWindow = {VideoMode(1200, 950), "Circle the Cat"};
     Screen m_screen;
     Board m_board;
     Cat m_cat;
+  bool m_gameOver;
+  bool m_userWon;
     vector<pair<Vector2i, Vector2i >> m_moves; //cat moves + player clicks
 };

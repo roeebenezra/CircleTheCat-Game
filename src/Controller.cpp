@@ -2,7 +2,8 @@
 
 //_____________________
 Controller::Controller()
-        : m_cat(m_board) {
+        : m_cat(m_board), m_nextMove({5, 5}),
+          m_gameOver(false), m_userWon(false) {
     runGame();
 }
 
@@ -12,6 +13,8 @@ void Controller::runGame() {
         handleEvents();
         m_gameWindow.clear(Color::White);
         drawBoard(m_gameWindow);
+        if (m_gameOver || m_userWon)
+            handleEnd();
         m_gameWindow.display();
     }
 }
@@ -43,23 +46,23 @@ void Controller::exitGame(const Event &event) {
 //___________________________________________________
 void Controller::mouseEventPressed(const Event &event) {
     auto location = m_gameWindow.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
-    if (m_board.ClickOnBoard(location, m_cat.getCatPos())) {
-        //save last moves
+    if (m_board.ClickOnBoard(location, m_cat.getCatCoordinates())) {
         m_moves.emplace_back(pair<Vector2i, Vector2i>(m_cat.getCatPos(), m_board.getCurrClick()));
         m_screen.setSteps();
         m_cat.move();
         if (m_cat.checkCatWon())
-            handleCatWon();
-    }
-    if (m_screen.clickOnUndo(location))
+            m_gameOver = true;
+        if (m_cat.handleCatTrapped())
+            m_userWon = true;
+      if (m_screen.clickOnUndo(location))
         handleClickOnUndo();
+    }
 }
 
 //_________________________________________________
 void Controller::mouseEventMoved(const Event &event) {
     auto location = Vector2f(float(event.mouseMove.x), float(event.mouseMove.y));
-    m_board.findMovement(location, m_cat.getCatPos());
-    m_screen.findMovement(location);
+    m_board.findMovement(location, m_cat.getCatCoordinates());
 }
 
 //_____________________________________________
@@ -70,11 +73,15 @@ void Controller::drawBoard(RenderWindow &window) {
 }
 
 //____________________________
-void Controller::handleCatWon() {
-    m_screen.drawGameOver(m_gameWindow);
-    m_screen.resetSteps();
+void Controller::handleEnd() {
+    if (m_userWon)
+        m_screen.drawUserWon(m_gameWindow);
+    if (m_gameOver)
+        m_screen.drawGameOver(m_gameWindow);
     m_board.restartBoard();
     m_cat.setCatPosition(StartPos);
+    m_gameOver = false;
+    m_userWon = false;
 }
 
 //_________________________________
