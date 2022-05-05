@@ -29,8 +29,6 @@ bool Cat::checkCatWon() const {
     if (getMovingObjectPLace().x == BoardSize - 1 || getMovingObjectPLace().x == 0 ||
             getMovingObjectPLace().y == BoardSize - 1 || getMovingObjectPLace().y == 0) {
         std::cout << getMovingObjectPLace().x << " m_place " << getMovingObjectPLace().y << "\n";
-        Clock clock;
-        while (clock.getElapsedTime().asSeconds() < 1);
         return true;
     }
     return false;

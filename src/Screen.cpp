@@ -84,9 +84,9 @@ void Screen::findMovement(const Vector2f &loc) {
 
 //__________________________________________
 bool Screen::clickOnUndo(const Vector2f &loc) {
-    if (m_boardTexts[UNDO].getGlobalBounds().contains(loc)) {
+    if (m_boardTexts[UNDO].getGlobalBounds().contains(loc))
         return true;
-    }
+
     return false;
 }
 

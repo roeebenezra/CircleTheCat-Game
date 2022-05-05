@@ -9,7 +9,6 @@ sf::Vector2i MoveObject::getNextMove(const BoardVector &board) {
     if (bfs(board, e, visited, prev)) {
         return reversePrev(prev, e);
     }
-    m_moves.emplace_back(prev.front());
     std::cout << "no path, cat trapped\n";
     return m_place;
 }
@@ -89,7 +88,7 @@ sf::Vector2i MoveObject::reversePrev(sf::Vector2i prev[BoardSize][BoardSize],
 }
 
 //__________________________________________________________________
-[[noreturn]] sf::Vector2i MoveObject::returnRandomMove(const BoardVector &board) {
+sf::Vector2i MoveObject::returnRandomMove(const BoardVector &board) {
     int y;
     for (int i = 0; i < amountOfDir; i++) {
         int x = m_place.x + dRow[i];
