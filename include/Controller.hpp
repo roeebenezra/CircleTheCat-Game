@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Screen.hpp"
 #include "Board.hpp"
 #include "Cat.hpp"
@@ -10,23 +11,30 @@
 #include <memory>
 
 
-class Controller
-{
+class Controller {
 public:
-	Controller();
-	void runGame();
+    Controller();
+
+    void runGame();
 
 private:
-	void drawBoard(RenderWindow&);
-	void handleEvents();
-	void mouseEventPressed(const Event&);
-	void mouseEventMoved(const Event&);
-	void exitGame(const Event&);
-	void handleCatWon();
+    void drawBoard(RenderWindow &);
 
-	RenderWindow m_gameWindow = { VideoMode(1200, 950), "Circle the Cat" };
-	Screen m_screen;
-	Board m_board;
-	Cat m_cat;
-    sf::Vector2i m_nextMove;
+    void handleEvents();
+
+    void handleClickOnUndo();
+
+    void mouseEventPressed(const Event &);
+
+    void mouseEventMoved(const Event &);
+
+    void exitGame(const Event &);
+
+    void handleCatWon();
+
+    RenderWindow m_gameWindow = {VideoMode(1200, 950), "Circle the Cat"};
+    Screen m_screen;
+    Board m_board;
+    Cat m_cat;
+    vector<pair<Vector2i, Vector2i >> m_moves; //cat moves + player clicks
 };

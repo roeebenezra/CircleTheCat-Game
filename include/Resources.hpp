@@ -1,26 +1,31 @@
 #pragma once
+
 #include <vector>
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include <SFML/Audio.hpp>
 #include "macros.hpp"
 
-class Resources
-{
+class Resources {
 public:
-	static Resources& instance();
-	Resources(const Resources&) = delete;
-	void operator=(const Resources&) = delete;
+    static Resources &instance();
 
-	Font& getFont() { return m_textFont; }
-	Sprite& getSprite() { return m_catSprite; }
-	Texture& getTexture() { return m_catTexture; }
+    Resources(const Resources &) = delete;
+
+    void operator=(const Resources &) = delete;
+
+    Font &getFont() { return m_textFont; }
+
+    Sprite &getSprite() { return m_catSprite; }
+
+    Texture &getTexture() { return m_catTexture; }
 
 private:
-	Resources();
-	void loadResources();
+    Resources();
 
-	Font m_textFont;
-	Sprite m_catSprite;
-	Texture m_catTexture;
+    void loadResources();
+
+    Font m_textFont;
+    Sprite m_catSprite;
+    Texture m_catTexture;
 };

@@ -25,5 +25,8 @@ const int dCol[] = {0, 1, -1, 1, 0, 1};
 const int amountOfDir = 6;
 
 using BoardVector = vector<std::vector<CircleShape>>;
-const Vector2i StartPos = { 5,5 };		//cat start point
+const Vector2i StartPos = {5, 5};        //cat start point
 
+enum TEXTS {
+    TITLE, LEVEL, STEPS, UNDO
+};

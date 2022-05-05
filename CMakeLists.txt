@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.20)
 
-project (ex4)
+project (CircleTheCat)
 
 # New CMake versions map C++20 to /std:c++20 instead of c++latest, so <format>
 # and other unstable ABI features aren't supported. Use C++23 for such versions
@@ -61,6 +61,6 @@ find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 
 set_target_properties (sfml-system sfml-window sfml-graphics sfml-audio sfml-network PROPERTIES MAP_IMPORTED_CONFIG_RELWITHDEBINFO RELEASE)
 
-target_link_libraries(ex4 sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+target_link_libraries(CircleTheCat sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 
 include_directories(${SFML_INCLUDE_DIRS})
