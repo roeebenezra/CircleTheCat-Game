@@ -1,40 +1,44 @@
 #include "Cat.hpp"
 
 //___________________
-Cat::Cat(Board &board)
-        : m_board(&board), MoveObject(StartPos) {
+Cat::Cat(Board &board) : MoveObject(board, StartPos) {
 
-    m_catSprite.setTexture(Resources::instance().getTexture());
-    m_catSprite.setTextureRect(IntRect(375, 7, 100, 73));
-    m_catSprite.setScale(float(1.2), float(1.2));
-    m_catSprite.setPosition(m_board->getCircle(StartPos.x, StartPos.y).getPosition());
+    setIntRectSprite(IntRect(375, 7, 100, 73));
+    setSpriteScale(float(1.2), float(1.2));
+    setSpritePosition(getObjectPos(StartPos.x, StartPos.y));
 }
 
 //___________________________________________________
 void Cat::setCatPosition(const sf::Vector2i &nextMove) {
-    m_catSprite.setPosition(m_board->getCircle(nextMove.x, nextMove.y).getPosition());
+    setSpritePosition(getObjectPos(nextMove.x, nextMove.y));
     setMovingObjectPLace(nextMove);
 }
 
 //_____________
 void Cat::move() {
-    Vector2i newMove = getNextMove(m_board->getBoard());
-    if (newMove == getMovingObjectPLace())
-        return;
-    setCatPosition(newMove);
+    if (getCanMove()) {
+        Vector2i newMove = getNextMove();
+        if (newMove == getObjectLoc())
+            return;
+        setCatPosition(newMove);
+    }
+    else
+        setCatPosition(returnRandomMove());
+    handleCatTrapped();
 }
 
-//_________________________
+//____________________________
 bool Cat::checkCatWon() const {
-    if (getMovingObjectPLace().x == BoardSize - 1 || getMovingObjectPLace().x == 0 ||
-            getMovingObjectPLace().y == BoardSize - 1 || getMovingObjectPLace().y == 0) {
-        std::cout << getMovingObjectPLace().x << " m_place " << getMovingObjectPLace().y << "\n";
+    if (getObjectLoc().x == BoardSize - 1 || getObjectLoc().x == 0 ||
+        getObjectLoc().y == BoardSize - 1 || getObjectLoc().y == 0)
         return true;
-    }
+
     return false;
 }
 
 //__________________________
-bool Cat::handleCatTrapped() const {
-    return checkObjectFullyTrapped(m_board->getBoard());
+void Cat::handleCatTrapped() {
+    if (checkObjectFullyTrapped())
+        setCanMove(false);
+
 }

@@ -1,7 +1,5 @@
 #pragma once
-
 #include <vector>
-#include <SFML/Graphics.hpp>
 #include "macros.hpp"
 #include "Resources.hpp"
 

@@ -55,9 +55,9 @@ void Screen::resetSteps() {
 //_________________________________________________
 void Screen::drawUserWon(RenderWindow& window)const
 {
-	Text text = createText({ 250, 300 }, 250, "You Win!", Color::Red);
+	Text text = createText({ 250, 300 }, 250, "You Win!", Color::Blue);
 	Clock clock;
-	while (clock.getElapsedTime().asSeconds() < 1)
+	while (clock.getElapsedTime().asSeconds() < 2)
 	{
 		window.draw(text);
 		window.display();

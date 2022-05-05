@@ -1,31 +1,30 @@
 #include "MoveObject.hpp"
 #include <iostream>
 
-//___________________________________________________________
-sf::Vector2i MoveObject::getNextMove(const BoardVector &board) {
+//________________________________
+Vector2i MoveObject::getNextMove() {
     bool visited[BoardSize][BoardSize] = {{false}};
     sf::Vector2i prev[BoardSize][BoardSize];
     sf::Vector2i e;
-    if (bfs(board, e, visited, prev)) {
+    if (bfs(e, visited, prev)) {
         return reversePrev(prev, e);
     }
     std::cout << "no path, cat trapped\n";
-    return m_place;
+    return getObjectLoc();
 }
 
-//___________________________________________
 // Function to perform the BFS traversal
-bool MoveObject::bfs(const BoardVector &board,
-                     sf::Vector2i &e,
+//_______________________________
+bool MoveObject::bfs(Vector2i &e,
                      bool visited[][BoardSize],
-                     sf::Vector2i prev[BoardSize][BoardSize]) {
+                     Vector2i prev[BoardSize][BoardSize]) {
     // Stores indices of the matrix cells
     std::queue<std::pair<int, int>> q;
 
     // Mark the starting cell as visited
     // and push it into the queue
-    q.push({m_place.x, m_place.y});
-    visited[m_place.x][m_place.y] = true;
+    q.push({getObjectLoc().x, getObjectLoc().y});
+    visited[getObjectLoc().x][getObjectLoc().y] = true;
 
     // Iterate while the queue is not empty
     while (!q.empty()) {
@@ -39,17 +38,13 @@ bool MoveObject::bfs(const BoardVector &board,
         // Go to the adjacent cells
         for (int i = 0; i < amountOfDir; i++) {
             adjx = x + dRow[i];
-            m_place.x % 2 == 0 ? adjy = y + dColEven[i] :
+            getObjectLoc().x % 2 == 0 ? adjy = y + dColEven[i] :
                     adjy = y + dColOdd[i];
-            e = sf::Vector2i(adjx, adjy);
-//            std::cout << "parent1: (" << x << ", " << y << ")" << std::endl;
-//            std::cout << "neighbor1: (" << adjx << ", " << adjy << ")" << std::endl;
-            if (isValid(board, visited, sf::Vector2i(adjx, adjy))) {
+            e = Vector2i(adjx, adjy);
+            if (isValid(visited, Vector2i(adjx, adjy))) {
                 q.push({adjx, adjy});
                 visited[adjx][adjy] = true;
-                prev[adjx][adjy] = sf::Vector2i(x, y);
-//                std::cout << "parent2: (" << x << ", " << y << ")" << std::endl;
-//                std::cout << "neighbor2: (" << adjx << ", " << adjy << ")" << std::endl;
+                prev[adjx][adjy] = Vector2i(x, y);
                 if (adjx == 10 || adjx == 0 || adjy == 0 || adjy == 10)
                     return true;
             }
@@ -60,26 +55,30 @@ bool MoveObject::bfs(const BoardVector &board,
 }
 
 //________________________________________________
-bool MoveObject::isValid(const BoardVector &board,
-                         bool visited[][BoardSize],
-                         const sf::Vector2i &i) {
+bool MoveObject::isValid(bool visited[][BoardSize],
+                         const Vector2i &i) {
     // If cell lies out of bounds
-    if (i.x < 0 || i.y < 0 || i.x >= BoardSize || i.y >= BoardSize)
+    if (checkAdjInBounds(i))
         return false;
 
     // If cell is already visited
-    if (visited[i.x][i.y] || board[i.x][i.y].getFillColor() == Color::Black)
+    if (visited[i.x][i.y] || isShapeBlack(i.x, i.y))
         return false;
 
     // Otherwise
     return true;
 }
 
-//___________________________________________________________________
-sf::Vector2i MoveObject::reversePrev(sf::Vector2i prev[BoardSize][BoardSize],
+//________________________________________________________
+bool MoveObject::checkAdjInBounds(const Vector2i &i) const {
+    return i.x < 0 || i.y < 0 || i.x > BoardSize -1 || i.y > BoardSize -1;
+}
+
+//_______________________________________________________________________
+sf::Vector2i MoveObject::reversePrev(Vector2i prev[BoardSize][BoardSize],
                                      const sf::Vector2i &e) {
-    std::vector<sf::Vector2i> path;
-    for (auto at = e; at != m_place; at = prev[at.x][at.y]) {
+    std::vector<Vector2i> path;
+    for (auto at = e; at != getObjectLoc(); at = prev[at.x][at.y]) {
         std::cout << "path: (" << at.x << ", " << at.y << ")" << std::endl;
         path.push_back(at);
     }
@@ -87,35 +86,34 @@ sf::Vector2i MoveObject::reversePrev(sf::Vector2i prev[BoardSize][BoardSize],
     return path[path.size() - 1];
 }
 
-//__________________________________________________________________
-sf::Vector2i MoveObject::returnRandomMove(const BoardVector &board) {
+//_____________________________________
+Vector2i MoveObject::returnRandomMove() {
     int y;
     for (int i = 0; i < amountOfDir; i++) {
-        int x = m_place.x + dRow[i];
-        m_place.x % 2 == 0 ? y = m_place.y + dColEven[i] :
-                y = m_place.y + dColOdd[i];
+        int x = getObjectLoc().x + dRow[i];
+        getObjectLoc().x % 2 == 0 ? y = getObjectLoc().y + dColEven[i] :
+                y = getObjectLoc().y + dColOdd[i];
 
         // If cell lies out of bounds
-        if (y < 0 || m_place.y < 0 || m_place.x >= BoardSize || m_place.y >= BoardSize)
+        if (checkAdjInBounds(Vector2i(x, y)))
             continue;
-        if (board[x][y].getFillColor() != Color::Black)
+        if (isShapeBlack(x, y))
             return {x, y};
     }
 }
 
-//__________________________________________
-bool MoveObject::checkObjectFullyTrapped(const BoardVector &board) const {
+//______________________________________________
+bool MoveObject::checkObjectFullyTrapped() const {
     int y;
     for (int i = 0; i < amountOfDir; i++) {
-        int x = m_place.x + dRow[i];
-        m_place.y % 2 == 0 ? y = m_place.y + dColEven[i] :
-                y = m_place.y + dColOdd[i];
+        int x = getObjectLoc().x + dRow[i];
+        getObjectLoc().y % 2 == 0 ? y = getObjectLoc().y + dColEven[i] :
+                y = getObjectLoc().y + dColOdd[i];
 
         // If cell lies out of bounds
-        if (m_place.x < 0 || m_place.y < 0 ||
-            m_place.x > BoardSize - 1 || m_place.y > BoardSize - 1)
+        if (checkAdjInBounds(Vector2i(x, y)))
             continue;
-        if (board[x][y].getFillColor() != Color::Black)
+        if (!isShapeBlack(x, y))
             return false;
     }
     return true;
