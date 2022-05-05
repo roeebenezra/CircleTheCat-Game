@@ -36,7 +36,7 @@ private:
     Screen m_screen;
     Board m_board;
     Cat m_cat;
-  bool m_gameOver;
-  bool m_userWon;
+    bool m_gameOver;
+    bool m_userWon;
     vector<pair<Vector2i, Vector2i >> m_moves; //cat moves + player clicks
 };
