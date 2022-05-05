@@ -12,6 +12,7 @@ public:
 	void setSteps();
 	void drawScreen(RenderWindow&)const;
 	void drawGameOver(RenderWindow&)const;
+	void drawUserWon(RenderWindow&)const;
 
 private:
 	void setFonts();

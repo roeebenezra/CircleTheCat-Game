@@ -22,11 +22,13 @@ private:
 	void mouseEventPressed(const Event&);
 	void mouseEventMoved(const Event&);
 	void exitGame(const Event&);
-	void handleCatWon();
+	void handleEnd();
 
 	RenderWindow m_gameWindow = { VideoMode(1200, 950), "Circle the Cat" };
 	Screen m_screen;
 	Board m_board;
 	Cat m_cat;
     sf::Vector2i m_nextMove;
+    bool m_gameOver;
+    bool m_userWon;
 };

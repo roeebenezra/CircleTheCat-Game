@@ -2,46 +2,42 @@
 
 //___________________
 Cat::Cat(Board &board)
-    : m_board(&board), m_catWon(false) 
-{
+        : m_board(&board), MoveObject(StartPos) {
+
     m_catSprite.setTexture(Resources::instance().getTexture());
     m_catSprite.setTextureRect(IntRect(375, 7, 100, 73));
-
-    m_place = sf::Vector2i(5, 5);
-    
-    m_catSprite.setPosition(m_board->getCircle(5, 5).getPosition());
     m_catSprite.setScale(float(1.2), float(1.2));
+    m_catSprite.setPosition(m_board->getCircle(StartPos.x, StartPos.y).getPosition());
 }
 
 //___________________________________________________
-void Cat::setCatPosition(const sf::Vector2i &nextMove) 
-{
+void Cat::setCatPosition(const sf::Vector2i &nextMove) {
     m_catSprite.setPosition(m_board->getCircle(nextMove.x, nextMove.y).getPosition());
-    m_place = nextMove;
+    setMovingObjectPLace(nextMove);
 }
 
 //_____________
-void Cat::move() 
-{
-    Vector2i newMove = getNextMove(m_board->getBoard(), m_place);
-    if(m_board->getCircle(newMove.x, newMove.y).getFillColor() == Color::Black)
+void Cat::move() {
+    Vector2i newMove = getNextMove(m_board->getBoard());
+    if (newMove == getMovingObjectPLace()) {
         return;
-    m_place = newMove;
-    setCatPosition(m_place);
+    }
+    setCatPosition(newMove);
 }
 
 //_________________________
-bool Cat::checkCatWon()const 
-{
-    if (m_place.x == BoardSize - 1 || m_place.x == 0 || m_place.y == BoardSize - 1 || m_place.y == 0)
-    {
+bool Cat::checkCatWon() const {
+    if (getMovingObjectPLace().x == BoardSize - 1 || getMovingObjectPLace().x == 0 ||
+            getMovingObjectPLace().y == BoardSize - 1 || getMovingObjectPLace().y == 0) {
+        std::cout << getMovingObjectPLace().x << " m_place " << getMovingObjectPLace().y << "\n";
         Clock clock;
-        while (clock.getElapsedTime().asSeconds() < 1)
-        {
-            
-        }
+        while (clock.getElapsedTime().asSeconds() < 1);
         return true;
     }
-
     return false;
+}
+
+//__________________________
+bool Cat::handleCatTrapped() const {
+    return checkObjectFullyTrapped(m_board->getBoard());
 }
