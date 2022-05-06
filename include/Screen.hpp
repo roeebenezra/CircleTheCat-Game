@@ -18,7 +18,7 @@ public:
 
     void drawGameOver(RenderWindow &) const;
   
-    void drawUserWon(RenderWindow&)const;
+    void drawUserWon(RenderWindow&) const;
 
     void resetSteps();
 

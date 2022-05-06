@@ -12,7 +12,7 @@ public:
 
     Vector2i getObjectLoc() const { return m_place; }
 
-    void setMovingObjectPLace(const Vector2i &place) { m_place = place; }
+    void setObjectPLace(const Vector2i &place) { m_place = place; }
 
     void setSpritePosition(const Vector2f &loc) { m_sprite.setPosition(loc); }
 

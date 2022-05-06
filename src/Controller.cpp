@@ -30,7 +30,8 @@ void Controller::handleEvents() {
 
 //__________________________________________
 void Controller::exitGame(const Event &event) {
-    if (event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
+    if (event.key.code == sf::Keyboard::Escape ||
+        event.type == sf::Event::Closed)
         m_gameWindow.close();
 }
 
@@ -73,6 +74,8 @@ void Controller::handleEnd(const bool won) {
     m_screen.resetSteps();
     m_board.restartBoard();
     m_cat.setCatPosition(StartPos);
+    m_cat.setCanMove(true);
+    m_cat.setCatMove(true);
     m_moves.clear();
 }
 

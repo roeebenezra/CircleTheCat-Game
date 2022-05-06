@@ -12,7 +12,12 @@ public:
     bool checkCatWon() const;
 
     void setCatPosition(const Vector2i &);
+
+    void setCatMove(const bool move) { m_catMove = move; }
+
 private:
 
-    void handleCatTrapped();
+    bool handleCatTrapped();
+
+    bool m_catMove;
 };
