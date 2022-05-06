@@ -3,10 +3,6 @@
 //_______________________
 void Controller::runGame() {
     while (m_gameWindow.isOpen()) {
-        if (m_cat.checkCatWon())
-            handleEnd(false);
-        if (!m_cat.getCanMove())
-            handleEnd(true);
         handleEvents();
         m_gameWindow.clear(Color::White);
         drawBoard(m_gameWindow);
@@ -52,6 +48,10 @@ void Controller::mouseEventPressed(const Event &event) {
         m_moves.emplace_back(pair<Vector2i, Vector2i>(m_cat.getObjectLoc(), m_board.getCurrClick()));
         m_screen.setSteps();
         m_cat.move();
+        if (m_cat.checkCatWon())
+            handleEnd(false);
+        if (!m_cat.getCanMove())
+            handleEnd(true);
     }
     if (m_screen.clickOnUndo(location))
         handleClickOnUndo();
@@ -72,7 +72,7 @@ void Controller::handleEnd(const bool won) {
         m_screen.drawGameOver(m_gameWindow);
     m_screen.resetSteps();
     m_board.restartBoard();
-    m_cat.setMovingObjectPLace(StartPos);
+    m_cat.setCatPosition(StartPos);
     m_moves.clear();
 }
 
@@ -80,7 +80,7 @@ void Controller::handleEnd(const bool won) {
 void Controller::handleClickOnUndo() {
     if (m_moves.empty())
         return;
-    m_cat.setMovingObjectPLace(m_moves.back().first);
+    m_cat.setCatPosition(m_moves.back().first);
     m_board.setBoardCircle(m_moves.back().second);
     m_screen.stepsCounterDown();
     m_moves.pop_back();

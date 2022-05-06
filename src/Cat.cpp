@@ -1,7 +1,7 @@
 #include "Cat.hpp"
 
 //___________________
-Cat::Cat(Board &board) : MoveObject(board, StartPos) {
+Cat::Cat(const Board &board) : MoveObject(board, StartPos) {
 
     setIntRectSprite(IntRect(375, 7, 100, 73));
     setSpriteScale(float(1.2), float(1.2));
@@ -40,5 +40,4 @@ bool Cat::checkCatWon() const {
 void Cat::handleCatTrapped() {
     if (checkObjectFullyTrapped())
         setCanMove(false);
-
 }

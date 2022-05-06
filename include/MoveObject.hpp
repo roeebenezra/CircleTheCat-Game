@@ -8,7 +8,7 @@
 class MoveObject : public GameObject {
 
 public:
-    MoveObject(Board &board, const Vector2i &start) :
+    MoveObject(const Board &board, const Vector2i &start) :
              GameObject(start), m_board(&board), m_canMove(true) {};
 
     Vector2i getNextMove();
@@ -38,6 +38,6 @@ private:
 
     bool checkAdjInBounds(const Vector2i &i) const;
 
-    Board *m_board;
+    const Board *m_board;
     bool m_canMove;
 };

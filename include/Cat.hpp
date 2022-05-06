@@ -5,14 +5,14 @@
 
 class Cat : public MoveObject {
 public:
-    Cat(Board &);
+    Cat(const Board &);
 
     void move();
 
     bool checkCatWon() const;
 
-private:
     void setCatPosition(const Vector2i &);
+private:
 
     void handleCatTrapped();
 };
