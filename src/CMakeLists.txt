@@ -5,4 +5,4 @@
                                               "Cat.cpp"
                                               "MoveObject.cpp"
                                               "Screen.cpp"
-                                              )
+                                              "GameObject.cpp")

@@ -19,11 +19,11 @@ public:
 
     void setBoardCircle(Vector2i &pos);
 
-    BoardVector getBoard() const { return m_board; }
+    bool isShapeBlack(const int x, const int y) const { return m_board[x][y].getFillColor() == Color::Black; }
 
-    const CircleShape &getCircle(size_t row, size_t col) { return m_board[row][col]; }
+    Vector2f getPos(const int x, const int y) const { return m_board[x][y].getPosition(); }
 
-    Vector2i getCurrClick() { return m_currClick; }
+    Vector2i getCurrClick() const { return m_currClick; }
 
 private:
     void setBoard();

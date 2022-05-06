@@ -5,15 +5,12 @@
 #include "Cat.hpp"
 
 #include <iostream>
-#include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
-#include <memory>
-
 
 class Controller {
 public:
-    Controller();
+    Controller() : m_cat(m_board) {}
 
     void runGame();
 
@@ -30,13 +27,11 @@ private:
 
     void exitGame(const Event &);
 
-    void handleEnd();
+    void handleEnd(const bool);
 
     RenderWindow m_gameWindow = {VideoMode(1200, 950), "Circle the Cat"};
     Screen m_screen;
     Board m_board;
     Cat m_cat;
-    bool m_gameOver;
-    bool m_userWon;
     vector<pair<Vector2i, Vector2i >> m_moves; //cat moves + player clicks
 };

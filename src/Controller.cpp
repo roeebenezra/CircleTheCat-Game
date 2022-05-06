@@ -1,18 +1,11 @@
 #include "Controller.hpp"
 
-//_____________________
-Controller::Controller()
-        : m_cat(m_board), m_gameOver(false),
-          m_userWon(false) {}
-
 //_______________________
 void Controller::runGame() {
     while (m_gameWindow.isOpen()) {
         handleEvents();
         m_gameWindow.clear(Color::White);
         drawBoard(m_gameWindow);
-        if (m_gameOver || m_userWon)
-            handleEnd();
         m_gameWindow.display();
     }
 }
@@ -41,48 +34,46 @@ void Controller::exitGame(const Event &event) {
         m_gameWindow.close();
 }
 
+//_________________________________________________
+void Controller::mouseEventMoved(const Event &event) {
+    auto location = Vector2f(float(event.mouseMove.x), float(event.mouseMove.y));
+    m_board.findMovement(location, m_cat.getObjectLoc());
+    m_screen.findMovement(location);
+}
+
 //___________________________________________________
 void Controller::mouseEventPressed(const Event &event) {
     auto location = m_gameWindow.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
-    if (m_board.ClickOnBoard(location, m_cat.getCatCoordinates())) {
-        m_moves.emplace_back(pair<Vector2i, Vector2i>(m_cat.getCatCoordinates(), m_board.getCurrClick()));
+    if (m_board.ClickOnBoard(location, m_cat.getObjectLoc())) {
+        m_moves.emplace_back(pair<Vector2i, Vector2i>(m_cat.getObjectLoc(), m_board.getCurrClick()));
         m_screen.setSteps();
         m_cat.move();
         if (m_cat.checkCatWon())
-            m_gameOver = true;
-        if (m_cat.handleCatTrapped())
-            m_userWon = true;
+            handleEnd(false);
+        if (!m_cat.getCanMove())
+            handleEnd(true);
     }
     if (m_screen.clickOnUndo(location))
         handleClickOnUndo();
 }
 
-//_________________________________________________
-void Controller::mouseEventMoved(const Event &event) {
-    auto location = Vector2f(float(event.mouseMove.x), float(event.mouseMove.y));
-    m_board.findMovement(location, m_cat.getCatCoordinates());
-    m_screen.findMovement(location);
-}
-
 //_____________________________________________
 void Controller::drawBoard(RenderWindow &window) {
     m_board.drawBoard(window);
-    m_cat.showCat(window);
+    m_cat.showObject(window);
     m_screen.drawScreen(window);
 }
 
-//____________________________
-void Controller::handleEnd() {
-    if (m_userWon)
+//________________________________________
+void Controller::handleEnd(const bool won) {
+    if (won)
         m_screen.drawUserWon(m_gameWindow);
-    if (m_gameOver)
+    else
         m_screen.drawGameOver(m_gameWindow);
     m_screen.resetSteps();
     m_board.restartBoard();
     m_cat.setCatPosition(StartPos);
     m_moves.clear();
-    m_gameOver = false;
-    m_userWon = false;
 }
 
 //_________________________________

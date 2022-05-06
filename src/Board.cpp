@@ -102,7 +102,7 @@ void Board::restartBoard() {
     setRandomBlackCircles();
 }
 
-//______________________
+//_______________________________________
 void Board::setBoardCircle(Vector2i &pos) {
     m_board[size_t(pos.x)][size_t(pos.y)].setFillColor(Color{0, 255, 0, 127});
 }

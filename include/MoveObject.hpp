@@ -2,31 +2,42 @@
 
 #include <queue>
 #include "macros.hpp"
+#include "Board.hpp"
+#include "GameObject.hpp"
 
-class MoveObject {
-  
+class MoveObject : public GameObject {
+
 public:
-    MoveObject(const sf::Vector2i& start){ m_place = start; };
+    MoveObject(const Board &board, const Vector2i &start) :
+             GameObject(start), m_board(&board), m_canMove(true) {};
 
-    sf::Vector2i getNextMove(const BoardVector &);
+    Vector2i getNextMove();
 
-    sf::Vector2i getMovingObjectPLace() const { return m_place; }
-    void setMovingObjectPLace(const sf::Vector2i & place){ m_place = place; }
-    bool checkObjectFullyTrapped(const BoardVector &) const;
+    Vector2i returnRandomMove();
+
+    bool checkObjectFullyTrapped() const;
+
+    Vector2f getObjectPos(const int x, const int y) const { return m_board->getPos(x, y); }
+
+    bool isShapeBlack(const int x, const int y) const { return m_board->isShapeBlack(x, y); }
+
+    bool getCanMove() const { return m_canMove; }
+
+    void setCanMove(const bool move) { m_canMove = move; }
 
 private:
-    bool bfs(const BoardVector &,
-             sf::Vector2i &,
+    bool bfs(Vector2i &,
              bool[][BoardSize],
-             sf::Vector2i [BoardSize][BoardSize]);
+             Vector2i [BoardSize][BoardSize]);
 
-    bool isValid(const BoardVector &,
-                 bool[][BoardSize],
-                 const sf::Vector2i &);
+    bool isValid(bool[][BoardSize],
+                 const Vector2i &);
 
-    sf::Vector2i reversePrev(sf::Vector2i [BoardSize][BoardSize],
-                             const sf::Vector2i &);
+    Vector2i reversePrev(Vector2i [BoardSize][BoardSize],
+                         const Vector2i &);
 
-    sf::Vector2i returnRandomMove(const BoardVector &);
-    sf::Vector2i m_place;
+    bool checkAdjInBounds(const Vector2i &i) const;
+
+    const Board *m_board;
+    bool m_canMove;
 };
