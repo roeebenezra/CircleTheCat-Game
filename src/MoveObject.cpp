@@ -38,7 +38,7 @@ bool MoveObject::bfs(Vector2i &e,
         // Go to the adjacent cells
         for (int i = 0; i < amountOfDir; i++) {
             adjx = x + dRow[i];
-            getObjectLoc().x % 2 == 0 ? adjy = y + dColEven[i] :
+            x % 2 == 0 ? adjy = y + dColEven[i] :
                     adjy = y + dColOdd[i];
             e = Vector2i(adjx, adjy);
             if (isValid(visited, Vector2i(adjx, adjy))) {
@@ -71,7 +71,7 @@ bool MoveObject::isValid(bool visited[][BoardSize],
 
 //________________________________________________________
 bool MoveObject::checkAdjInBounds(const Vector2i &i) const {
-    return i.x < 0 || i.y < 0 || i.x > BoardSize -1 || i.y > BoardSize -1;
+    return i.x < 0 || i.y < 0 || i.x > BoardSize - 1 || i.y > BoardSize - 1;
 }
 
 //_______________________________________________________________________
@@ -97,7 +97,7 @@ Vector2i MoveObject::returnRandomMove() {
         // If cell lies out of bounds
         if (checkAdjInBounds(Vector2i(x, y)))
             continue;
-        if (isShapeBlack(x, y))
+        if (!isShapeBlack(x, y))
             return {x, y};
     }
 }
@@ -107,9 +107,9 @@ bool MoveObject::checkObjectFullyTrapped() const {
     int y;
     for (int i = 0; i < amountOfDir; i++) {
         int x = getObjectLoc().x + dRow[i];
-        getObjectLoc().y % 2 == 0 ? y = getObjectLoc().y + dColEven[i] :
+        getObjectLoc().x % 2 == 0 ? y = getObjectLoc().y + dColEven[i] :
                 y = getObjectLoc().y + dColOdd[i];
-
+        std::cout << "\ntrapped: (" << x << ", " << y << ")\n";
         // If cell lies out of bounds
         if (checkAdjInBounds(Vector2i(x, y)))
             continue;

@@ -36,7 +36,7 @@ void Screen::drawScreen(RenderWindow &window) const {
 
 //__________________________
 void Screen::setStepsString() {
-    Texts[STEPS].replace(7, std::to_string(m_steps).size(), std::to_string(m_steps));
+    Texts[STEPS].replace(7, std::to_string(m_steps).size() + 1, std::to_string(m_steps));
     m_boardTexts[STEPS].setString(Texts[STEPS]);
 }
 
@@ -53,15 +53,13 @@ void Screen::resetSteps() {
 }
 
 //_________________________________________________
-void Screen::drawUserWon(RenderWindow& window)const
-{
-	Text text = createText({ 250, 300 }, 250, "You Win!", Color::Blue);
-	Clock clock;
-	while (clock.getElapsedTime().asSeconds() < 2)
-	{
-		window.draw(text);
-		window.display();
-	}
+void Screen::drawUserWon(RenderWindow &window) const {
+    Text text = createText({250, 300}, 250, "You Win!", Color::Blue);
+    Clock clock;
+    while (clock.getElapsedTime().asSeconds() < 2) {
+        window.draw(text);
+        window.display();
+    }
 }
 
 //___________________________________________________

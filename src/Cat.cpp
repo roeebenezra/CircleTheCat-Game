@@ -1,8 +1,7 @@
 #include "Cat.hpp"
 
 //___________________
-Cat::Cat(const Board &board) : MoveObject(board, StartPos) {
-
+Cat::Cat(const Board &board) : MoveObject(board, StartPos), m_catMove(true) {
     setIntRectSprite(IntRect(375, 7, 100, 73));
     setSpriteScale(float(1.2), float(1.2));
     setSpritePosition(getObjectPos(StartPos.x, StartPos.y));
@@ -11,20 +10,20 @@ Cat::Cat(const Board &board) : MoveObject(board, StartPos) {
 //___________________________________________________
 void Cat::setCatPosition(const sf::Vector2i &nextMove) {
     setSpritePosition(getObjectPos(nextMove.x, nextMove.y));
-    setMovingObjectPLace(nextMove);
+    setObjectPLace(nextMove);
 }
 
 //_____________
 void Cat::move() {
-    if (getCanMove()) {
+    if (m_catMove) {
         Vector2i newMove = getNextMove();
         if (newMove == getObjectLoc())
-            return;
+            setCatMove(false);
         setCatPosition(newMove);
-    }
-    else
+    } else
         setCatPosition(returnRandomMove());
-    handleCatTrapped();
+    if (handleCatTrapped())
+        setCanMove(false);
 }
 
 //____________________________
@@ -37,7 +36,7 @@ bool Cat::checkCatWon() const {
 }
 
 //__________________________
-void Cat::handleCatTrapped() {
+bool Cat::handleCatTrapped() {
     if (checkObjectFullyTrapped())
-        setCanMove(false);
+        return true;
 }
