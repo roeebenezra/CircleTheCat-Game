@@ -14,13 +14,10 @@ public:
 
     Font &getFont() { return m_textFont; }
 
-    Sprite &getSprite() { return m_catSprite; }
-
     Texture &getTexture() { return m_catTexture; }
 
 private:
     Resources();
-
     void loadResources();
 
     Font m_textFont;

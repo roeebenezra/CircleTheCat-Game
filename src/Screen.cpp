@@ -3,6 +3,7 @@
 //_____________
 Screen::Screen() {
     setFonts();
+    setLevels();
 }
 
 //____________________
@@ -34,37 +35,35 @@ void Screen::drawScreen(RenderWindow &window) const {
         window.draw(i);
 }
 
-//__________________________
-void Screen::setStepsString() {
-    Texts[STEPS].replace(7, std::to_string(m_steps).size() + 1, std::to_string(m_steps));
-    m_boardTexts[STEPS].setString(Texts[STEPS]);
+//__________________________________________________________
+void Screen::setTextString(const TEXTS& text, int num)
+{
+    Texts[text].replace(7, std::to_string(num).size() + 1, std::to_string(num));
+    m_boardTexts[text].setString(Texts[text]);
 }
 
 //____________________
 void Screen::setSteps() {
     stepsCounter();
-    setStepsString();
+    setTextString(STEPS, m_steps);
+}
+//____________________
+void Screen::setLevels() {
+    m_level++;
+    setTextString(LEVEL, m_level);
 }
 
 //______________________
 void Screen::resetSteps() {
     m_steps = 0;
-    setStepsString();
+    setTextString(STEPS, m_steps);
 }
 
-//_________________________________________________
-void Screen::drawUserWon(RenderWindow &window) const {
-    Text text = createText({250, 300}, 250, "You Win!", Color::Blue);
-    Clock clock;
-    while (clock.getElapsedTime().asSeconds() < 2) {
-        window.draw(text);
-        window.display();
-    }
-}
-
-//___________________________________________________
-void Screen::drawGameOver(RenderWindow &window) const {
-    Text text = createText({250, 300}, 250, "Game Over", Color::Red);
+//_____________________________________________________________________
+void Screen::drawEnd(RenderWindow & window, const std::string & message,
+                     const Color& color) const
+{
+    Text text = createText({250, 300}, 250, message, color);
     Clock clock;
     while (clock.getElapsedTime().asSeconds() < 2) {
         window.draw(text);
@@ -81,7 +80,7 @@ void Screen::findMovement(const Vector2f &loc) {
 }
 
 //__________________________________________
-bool Screen::clickOnUndo(const Vector2f &loc) {
+bool Screen::clickOnUndo(const Vector2f &loc)const {
     if (m_boardTexts[UNDO].getGlobalBounds().contains(loc))
         return true;
 
@@ -91,5 +90,5 @@ bool Screen::clickOnUndo(const Vector2f &loc) {
 //____________________________
 void Screen::stepsCounterDown() {
     m_steps--;
-    setStepsString();
+    setTextString(STEPS, m_steps);
 }

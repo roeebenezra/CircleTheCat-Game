@@ -1,7 +1,7 @@
 #include "Board.hpp"
 
 //____________
-Board::Board() {
+Board::Board() : m_numOfRandomBlackCircles(15) {
     setBoard();
 }
 
@@ -80,7 +80,8 @@ bool Board::ClickOnBoard(Vector2f &loc,
 
 //________________________________
 void Board::setRandomBlackCircles() {
-    int size = 14, x, y;
+    int size = m_numOfRandomBlackCircles,
+            x, y;
     srand(static_cast<unsigned>(time(nullptr)));
 
     for (int i = 0; i < size; ++i) {
@@ -90,6 +91,7 @@ void Board::setRandomBlackCircles() {
         } while (m_board[x][y].getFillColor() == Color::Black ||
                  (x == StartPos.x && y == StartPos.y));
         m_board[x][y].setFillColor(Color::Black);
+        m_randomBlack.push_back({x, y});
     }
 }
 
@@ -99,7 +101,24 @@ void Board::restartBoard() {
         for (auto &j: i)
             j.setFillColor(Color{0, 255, 0, 127});
 
+    m_randomBlack.clear();
+    m_numOfRandomBlackCircles -= 3;
     setRandomBlackCircles();
+}
+
+//______________________
+void Board::resetBoard() {
+    for (auto &i: m_board)
+        for (auto &j: i)
+            j.setFillColor(Color{0, 255, 0, 127});
+
+    setBackRandomBlackCircles();
+}
+
+//_____________________________________
+void Board::setBackRandomBlackCircles() {
+    for (int i = 0; i < m_randomBlack.size(); ++i)
+        m_board[m_randomBlack[i].x][m_randomBlack[i].y].setFillColor(Color::Black);
 }
 
 //_______________________________________
