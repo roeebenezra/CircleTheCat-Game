@@ -22,6 +22,8 @@ public:
 
     bool getCanMove() const { return m_canMove; }
 
+    Sprite getCatSprite() const { return m_sprite; }
+
     void setCanMove(const bool move) { m_canMove = move; }
 
     void showObject(RenderWindow &window) const { window.draw(m_sprite); }
