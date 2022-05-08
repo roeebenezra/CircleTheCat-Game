@@ -1,5 +1,7 @@
 #pragma once
+
 #include <vector>
+#include <string>
 #include "macros.hpp"
 #include "Resources.hpp"
 
@@ -12,20 +14,22 @@ public:
 
     void findMovement(const Vector2f &);
 
-    bool clickOnUndo(const Vector2f &);
+    bool clickOnUndo(const Vector2f &)const ;
 
     void drawScreen(RenderWindow &) const;
 
-    void drawGameOver(RenderWindow &) const;
-  
-    void drawUserWon(RenderWindow&) const;
+    void drawEnd(RenderWindow &, const std::string &, const Color &) const;
 
     void resetSteps();
 
+    void setLevels();
+
     void stepsCounterDown();
 
+    unsigned int getNumOfLevel() const { return m_level; }
+
 private:
-    void setStepsString();
+    void setTextString(const TEXTS&, int);
 
     void setFonts();
 
@@ -34,8 +38,9 @@ private:
     void stepsCounter() { m_steps++; }
 
     unsigned int m_steps = 0;
+    unsigned int m_level = 0;
 
-    std::vector<Text> m_boardTexts;
-    std::vector<std::vector<Vector2f>> m_levels;
-    std::vector<std::string> Texts = {"Circle The Cat", "Level: ", "Steps: ", "Undo"};
+    vector<Text> m_boardTexts;
+    vector<vector<Vector2f>> m_levels;
+    vector<string> Texts = {"Circle The Cat", "Level: ", "Steps: ", "Undo"};
 };

@@ -4,5 +4,4 @@
                                               "Board.cpp"
                                               "Cat.cpp"
                                               "MoveObject.cpp"
-                                              "Screen.cpp"
-                                              "GameObject.cpp")
+                                              "Screen.cpp")

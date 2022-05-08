@@ -9,13 +9,13 @@ public:
 
     void drawBoard(RenderWindow &) const;
 
-    void setRandomBlackCircles();
-
     void findMovement(Vector2f &, const Vector2i &);
 
     bool ClickOnBoard(Vector2f &, const Vector2i &);
 
     void restartBoard();
+
+    void resetBoard();
 
     void setBoardCircle(Vector2i &pos);
 
@@ -26,10 +26,13 @@ public:
     Vector2i getCurrClick() const { return m_currClick; }
 
 private:
+    void setRandomBlackCircles();
+    void setBackRandomBlackCircles();
     void setBoard();
-
     static CircleShape createCircle(Vector2f &);
 
     BoardVector m_board;
     Vector2i m_currClick;
+    vector<Vector2i> m_randomBlack;
+    int m_numOfRandomBlackCircles;
 };

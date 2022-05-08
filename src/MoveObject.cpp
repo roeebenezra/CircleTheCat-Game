@@ -1,6 +1,12 @@
 #include "MoveObject.hpp"
 #include <iostream>
 
+MoveObject::MoveObject(const Board &board, const Vector2i &start) :
+        m_board(&board), m_canMove(true), m_place(start) {
+    m_sprite.setTexture(Resources::instance().getTexture());
+    m_sprite.setScale(1.2f, 1.2f);
+}
+
 //________________________________
 Vector2i MoveObject::getNextMove() {
     bool visited[BoardSize][BoardSize] = {{false}};
@@ -9,7 +15,6 @@ Vector2i MoveObject::getNextMove() {
     if (bfs(e, visited, prev)) {
         return reversePrev(prev, e);
     }
-    std::cout << "no path, cat trapped\n";
     return getObjectLoc();
 }
 
@@ -40,17 +45,16 @@ bool MoveObject::bfs(Vector2i &e,
             adjx = x + dRow[i];
             x % 2 == 0 ? adjy = y + dColEven[i] :
                     adjy = y + dColOdd[i];
-            e = Vector2i(adjx, adjy);
-            if (isValid(visited, Vector2i(adjx, adjy))) {
+            e = {adjx, adjy};
+            if (isValid(visited, {adjx, adjy})) {
                 q.push({adjx, adjy});
                 visited[adjx][adjy] = true;
-                prev[adjx][adjy] = Vector2i(x, y);
+                prev[adjx][adjy] = {x, y};
                 if (adjx == 10 || adjx == 0 || adjy == 0 || adjy == 10)
                     return true;
             }
         }
     }
-    std::cout << "\nend1!!!!" << std::endl;
     return false;
 }
 
@@ -79,10 +83,8 @@ sf::Vector2i MoveObject::reversePrev(Vector2i prev[BoardSize][BoardSize],
                                      const sf::Vector2i &e) {
     std::vector<Vector2i> path;
     for (auto at = e; at != getObjectLoc(); at = prev[at.x][at.y]) {
-        std::cout << "path: (" << at.x << ", " << at.y << ")" << std::endl;
         path.push_back(at);
     }
-    std::cout << "\nend2!!!!" << std::endl;
     return path[path.size() - 1];
 }
 
@@ -95,11 +97,12 @@ Vector2i MoveObject::returnRandomMove() {
                 y = getObjectLoc().y + dColOdd[i];
 
         // If cell lies out of bounds
-        if (checkAdjInBounds(Vector2i(x, y)))
+        if (checkAdjInBounds({x, y}))
             continue;
         if (!isShapeBlack(x, y))
             return {x, y};
     }
+    return getObjectLoc();
 }
 
 //______________________________________________
@@ -109,9 +112,8 @@ bool MoveObject::checkObjectFullyTrapped() const {
         int x = getObjectLoc().x + dRow[i];
         getObjectLoc().x % 2 == 0 ? y = getObjectLoc().y + dColEven[i] :
                 y = getObjectLoc().y + dColOdd[i];
-        std::cout << "\ntrapped: (" << x << ", " << y << ")\n";
         // If cell lies out of bounds
-        if (checkAdjInBounds(Vector2i(x, y)))
+        if (checkAdjInBounds({x, y}))
             continue;
         if (!isShapeBlack(x, y))
             return false;

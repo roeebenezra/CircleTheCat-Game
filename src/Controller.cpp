@@ -2,7 +2,7 @@
 
 //_______________________
 void Controller::runGame() {
-    while (m_gameWindow.isOpen()) {
+    while (m_gameWindow.isOpen() && m_screen.getNumOfLevel() < 4) {
         handleEvents();
         m_gameWindow.clear(Color::White);
         drawBoard(m_gameWindow);
@@ -58,7 +58,7 @@ void Controller::mouseEventPressed(const Event &event) {
         handleClickOnUndo();
 }
 
-//_____________________________________________
+//______________________________________________
 void Controller::drawBoard(RenderWindow &window) {
     m_board.drawBoard(window);
     m_cat.showObject(window);
@@ -67,12 +67,16 @@ void Controller::drawBoard(RenderWindow &window) {
 
 //________________________________________
 void Controller::handleEnd(const bool won) {
-    if (won)
-        m_screen.drawUserWon(m_gameWindow);
-    else
-        m_screen.drawGameOver(m_gameWindow);
+    if (won){
+        m_screen.drawEnd(m_gameWindow, "You Win!", Color::Blue);
+        m_screen.setLevels();
+        m_board.restartBoard();
+    }
+    else {
+        m_screen.drawEnd(m_gameWindow, "Game Over!", Color::Red);
+        m_board.resetBoard();
+    }
     m_screen.resetSteps();
-    m_board.restartBoard();
     m_cat.setCatPosition(StartPos);
     m_cat.setCanMove(true);
     m_cat.setCatMove(true);

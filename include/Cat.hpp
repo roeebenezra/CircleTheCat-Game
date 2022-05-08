@@ -16,8 +16,5 @@ public:
     void setCatMove(const bool move) { m_catMove = move; }
 
 private:
-
-    bool handleCatTrapped();
-
     bool m_catMove;
 };

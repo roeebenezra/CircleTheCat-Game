@@ -9,14 +9,12 @@
 #include <vector>
 
 class Controller {
-
 public:
-    Controller() : m_cat(m_board) {}
+    Controller() : m_cat(m_board) {}    //constructor
 
-    void runGame();
+    void runGame();     //main game loop function
 
 private:
-
     void drawBoard(RenderWindow &);
 
     void handleEvents();
